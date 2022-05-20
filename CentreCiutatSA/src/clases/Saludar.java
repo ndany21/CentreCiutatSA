@@ -7,7 +7,8 @@ public class Saludar {
 		System.out.println("FURULA?");
 		
 		System.out.println("Hola, soy Miriam!");
-		
+		System.out.println("HOLA MUNDO");
+
 	}
 
 }
