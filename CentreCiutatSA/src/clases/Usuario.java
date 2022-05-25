@@ -62,16 +62,18 @@ public class Usuario {
 		CuentaCorriente = cuentaCorriente;
 	}
 
-	public static void BuscarTuVehiculo() {
-		Scanner teclado = new Scanner (System.in);
-		System.out.println(" Introduce la matricula: ");
-	}
-	
-	
-	@Override
-	public String toString() {
-		return "Usuario [nombre=" + nombre + ", apellidos=" + apellidos + ", DNI=" + DNI + ", direccion=" + direccion
-				+ ", CuentaCorriente=" + CuentaCorriente + "]";
+	public String MostrarInformacionPersonal() {
+		Scanner teclado = new Scanner(System.in);
+		System.out.println(" Introduce tu DNI: ");
+		String dni = teclado.nextLine();
+		System.out.println(" ");
+		System.out.println("======================================");
+		System.out.println("======================================");
+		return "\n Nombre: " + nombre + " "
+				+ "Apellidos: " + apellidos 
+				+ " DNI:" + DNI 
+				+ ", direccion: " + direccion
+				+ ", CuentaCorriente=" + CuentaCorriente;
 	}
 
 }
