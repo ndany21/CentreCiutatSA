@@ -16,6 +16,10 @@ public abstract class Persona {
 		this.direccion = direccion;
 		this.cuentaCorriente = cuentaCorriente;
 	}
+	
+	public Persona() {
+		
+	}
 
 	//Getters & Setters
 	public String getNombre() {
