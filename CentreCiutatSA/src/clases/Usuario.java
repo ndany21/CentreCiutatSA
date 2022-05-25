@@ -62,19 +62,25 @@ public class Usuario {
 		CuentaCorriente = cuentaCorriente;
 	}
 
-	public String MostrarInformacionPersonal() {
+	public void MostrarInformacionPersonal() {
+		boolean salir = false;
+		while (!salir) {
 		Scanner teclado = new Scanner(System.in);
 		System.out.println(" Introduce tu DNI: ");
 		String dni = teclado.nextLine();
 		System.out.println(" ");
 		System.out.println("======================================");
 		System.out.println("======================================");
-		return " == USUARIO CLIENTE ==" + 
-				"\n Nombre: " + nombre + " "
-				+ "\n Apellidos: " + apellidos 
-				+ "\n DNI:" + DNI 
-				+ "\n direccion: " + direccion
-				+ "\n CuentaCorriente=" + CuentaCorriente;
+		System.out.println(" == USUARIO CLIENTE == "); 
+		System.out.println("\n Nombre: " + nombre);
+		System.out.println("\n Apellido: " + apellidos);
+		System.out.println("\n DNI: " + DNI);
+		System.out.println("\n Dirección " + direccion);
+		System.out.println("\n Cuenta Corriente: " + CuentaCorriente);
+		System.out.println("======================================");
+		System.out.println("======================================");
+		}
+		
 	
 	}
 
