@@ -69,11 +69,13 @@ public class Usuario {
 		System.out.println(" ");
 		System.out.println("======================================");
 		System.out.println("======================================");
-		return "\n Nombre: " + nombre + " "
-				+ "Apellidos: " + apellidos 
-				+ " DNI:" + DNI 
-				+ ", direccion: " + direccion
-				+ ", CuentaCorriente=" + CuentaCorriente;
+		return " == USUARIO CLIENTE ==" + 
+				"\n Nombre: " + nombre + " "
+				+ "\n Apellidos: " + apellidos 
+				+ "\n DNI:" + DNI 
+				+ "\n direccion: " + direccion
+				+ "\n CuentaCorriente=" + CuentaCorriente;
+	
 	}
 
 }
