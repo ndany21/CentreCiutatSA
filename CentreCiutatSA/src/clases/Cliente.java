@@ -82,28 +82,40 @@ public class Cliente extends Persona {
 
 		String matricula;
 		Statement stmt = null;
+		Statement stmt2 = null;
 
 		Scanner teclado = new Scanner(System.in);
 		System.out.println(" Introduce la matricula: ");
 		matricula = teclado.nextLine();
 
-		String query = "SELECT matricula, marca, modelo, TipoVehiculo from vehiculos where matricula = " + "'" + matricula + "'";
+		String query = "SELECT matricula, marca, modelo, TipoVehiculo from vehiculos where matricula = " + "'"
+				+ matricula + "'";
+
+		String query2 = "SELECT idEstacionamiento from usuarios where matricula = " + "'" + matricula + "'";
 
 		try {
 			stmt = con.createStatement();
+			stmt2 = con.createStatement();
+			
 			ResultSet rs = stmt.executeQuery(query);
-
-			while (rs.next()) {
+			ResultSet rs2 = stmt2.executeQuery(query2);
+			while (rs2.next()) {
 				System.out.println(" ");
 				System.out.println("======================================");
 				System.out.println("======================================");
 				System.out.println(" == VEHICULO DEL CLIENTE == ");
-				System.out.println("\n Marca: " + rs.getString("marca"));
-				System.out.println("\n Modelo: " + rs.getString("modelo"));
-				System.out.println("\n Tipo de vehículo " + rs.getString("TipoVehiculo"));
-				System.out.println("======================================");
-				System.out.println("======================================");
+				System.out.println("\n Número de estacionamiento: " + rs2.getString("idEstacionamiento"));
+
+				while (rs.next()) {
+
+					System.out.println("\n Marca: " + rs.getString("marca"));
+					System.out.println("\n Modelo: " + rs.getString("modelo"));
+					System.out.println("\n Tipo de vehículo: " + rs.getString("TipoVehiculo"));
+					System.out.println("======================================");
+					System.out.println("======================================");
+				}
 			}
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		} finally {
