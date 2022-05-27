@@ -10,7 +10,7 @@ public class UsuarioCliente {
 	public static void main(String[] args) {
 
 		try {
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:8889/CentreCiutat", "tur", "tur");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/centreciutat", "root", "");
 			System.out.println("Conexión establecida con la base de datos CentreCiutat S.A.");
 			
 			
@@ -69,7 +69,7 @@ public class UsuarioCliente {
 		    	case 1:
 		    	
 		    		//CONTECTAR CON BASE DE DATOS Y MOSTRAR POR PANTALLA INFORMACIÓN DEL VEHÍCULO DEL CLIENTE
-		    		
+		    		c1.buscartuVehiculo(con);
 		    	break;
 			case 2:
 				
