@@ -1,6 +1,7 @@
 package principal;
 
 import java.sql.*;
+import java.util.Scanner;
 
 import clases.Cliente;
 
@@ -9,7 +10,7 @@ public class UsuarioCliente {
 	public static void main(String[] args) {
 
 		try {
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/centreciutat", "root", "");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:8889/centreciutat", "tur", "tur");
 			System.out.println("Conexión establecida con la base de datos ciutat centre");
 			Cliente c1 = new Cliente();
 			c1.buscartuInformacion(con);
@@ -20,10 +21,9 @@ public class UsuarioCliente {
 
 	}
 	
-	Scanner NumScanner1 = new Scanner(System.in);
-	Scanner TecladoScanner = new Scanner (System.in);   
+	 
 	Scanner sc = new Scanner(System.in);
-	Scanner sn = new Scanner(System.in);
+	
 	boolean salir = false;
 	int opcion;
 	 
@@ -58,7 +58,7 @@ public class UsuarioCliente {
 	System.out.println(" ");
 	System.out.println("======================================");
 	System.out.println(" ");
-	opcion = sn.nextInt();
+	opcion = sc.nextInt();
 
 	switch(opcion){
     	case 1:
