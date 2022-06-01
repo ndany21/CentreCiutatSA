@@ -3,18 +3,19 @@ package principal;
 import java.sql.*;
 import java.util.Scanner;
 
-import clases.Cliente;
+import clases.*;;
 
 public class UsuarioCliente {
 
 	public static void main(String[] args) {
 
 		try {
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:8889/CentreCiutat", "tur", "tur");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/centreciutat", "root", "");
 			System.out.println("Conexión establecida con la base de datos CentreCiutat S.A.");
 			
 			
 			Cliente c1 = new Cliente();
+			Administrador a1 = new Administrador();
 			Scanner sc = new Scanner(System.in);
 			
 			
@@ -22,6 +23,7 @@ public class UsuarioCliente {
 			int opcion;
 			
 			
+			System.out.println(" ");
 			System.out.println(" ");
 		  	System.out.println("======================================");
 		  	System.out.println("========| Centre Ciutat S.A. |========");
@@ -70,7 +72,7 @@ public class UsuarioCliente {
 
 					}else if(nombreUsuario.equals(nombreIntroducido) && esAdmin.equals("1")){
 					
-						salir = menuAdmin(sc, salir); 	    	 
+						salir = menuAdmin(con, a1,sc, salir); 	    	 
 					}
 				 
 				 
@@ -107,7 +109,7 @@ public class UsuarioCliente {
 
 
 
-	public static boolean menuAdmin(Scanner sc, boolean salir) {
+	public static boolean menuAdmin(Connection con, Administrador a1,Scanner sc, boolean salir) throws SQLException {
 		int opcion;
 		while(!salir){
 			System.out.println("========== Bienvenid@  ==========");
@@ -129,6 +131,7 @@ public class UsuarioCliente {
 		    	case 1:
 		    	
 		    		//CONTECTAR CON BASE DE DATOS Y MOSTRAR POR PATNALLA LISTADO DE ALQUILERES
+		    		a1.listarAlquiler(con);
 		    		
 		    	break;
 			case 2:
