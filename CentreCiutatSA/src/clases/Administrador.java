@@ -1,5 +1,10 @@
 package clases;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
 public class Administrador extends Persona{
 
 	//Atributos
@@ -38,9 +43,57 @@ public class Administrador extends Persona{
 			
 	}
 	
-	public void eliminarAlquiler() {
-		
-	}
+	public void eliminarAlquiler(Connection con) {
+
+		Statement stmt = null;
+	
+		try {
+			String idAlq;
+			int opcion;
+			
+			
+			
+
+			Scanner teclado = new Scanner(System.in);
+			System.out.print(" Introduce el ID del Alquiler que deseas borrar: ");
+			idAlq= teclado.nextLine();
+
+			System.out.println("Estas seguro que lo quieres eliminar?");
+			System.out.println(" ");
+			System.out.println(" ");
+			System.out.println("1. Si");
+			System.out.println("1. No");
+			System.out.print("Opción:");
+			opcion= teclado.nextInt();
+			
+			switch (opcion) {
+			case 1:
+				stmt= con.createStatement();
+				stmt.executeUpdate("Delete from  alquileres  "+" where idAlquiler = "+idAlq);
+				break;
+			case 2:
+				
+				break;
+			default:
+				System.out.println("Elige una opción correcta");
+				break;
+			}
+			
+			
+			
+			
+		} catch (SQLException e) { 
+
+		}
+		finally {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+}
 	
 	public void listarAlquiler() {
 		
