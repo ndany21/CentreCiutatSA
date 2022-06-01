@@ -61,6 +61,7 @@ public class Administrador extends Persona{
 			System.out.println("Estas seguro que lo quieres eliminar?");
 			System.out.println(" ");
 			System.out.println(" ");
+			
 			System.out.println("1. Si");
 			System.out.println("1. No");
 			System.out.print("Opción:");
@@ -69,7 +70,7 @@ public class Administrador extends Persona{
 			switch (opcion) {
 			case 1:
 				stmt= con.createStatement();
-				stmt.executeUpdate("Delete from  alquileres  "+" where idAlquiler = "+idAlq);
+				stmt.executeUpdate("Delete from  alquiler  "+" where idAlquiler = "+idAlq);
 				break;
 			case 2:
 				
@@ -93,8 +94,7 @@ public class Administrador extends Persona{
 				e.printStackTrace();
 			}
 			}
-}
-	
+}	
 	public void listarAlquiler() {
 		
 	}
