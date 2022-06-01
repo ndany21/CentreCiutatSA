@@ -35,6 +35,7 @@ public class UsuarioCliente {
 		  	System.out.println("==            Contraseña             ==");
 		  	System.out.println(" ");
 		  	String contraseñaIntroducida = sc.nextLine();
+		  	
 		  	System.out.println(" ");
 		  	System.out.println(" ");
 		  	System.out.println(" ");
@@ -42,7 +43,7 @@ public class UsuarioCliente {
 			
 			Statement stmt = null;
 			
-			String query = "SELECT nombre, apellidos, admin from usuarios where nombre = " + "'"
+			String query = "SELECT nombre, apellidos, admin, contrasena from usuarios where nombre = " + "'"
 					+ nombreIntroducido + "'";
 		  	try {
 		  
@@ -53,14 +54,17 @@ public class UsuarioCliente {
 			String nombreUsuario = "";
 			String apellidosUsuario = "";
 			String esAdmin = "";
+			String contrasena = "";
+			
 			
 			while (rs.next()) {
 				 nombreUsuario = rs.getString("nombre");
 				 esAdmin = rs.getString("admin");
 				 apellidosUsuario = rs.getString("apellidos");
+				 contrasena = rs.getString("contrasena");
 				 
 				 
-				 if (nombreUsuario.equals(nombreIntroducido) && esAdmin.equals("0") ) {
+				 if (nombreUsuario.equals(nombreIntroducido)&& contrasena.equals(contraseñaIntroducida) && esAdmin.equals("0") ) {
 					salir = menuCliente(con, c1, sc, salir, nombreIntroducido, nombreUsuario, apellidosUsuario); 
 					
 
@@ -188,7 +192,7 @@ public class UsuarioCliente {
 
 			switch(opcion){
 		    	case 1:
-		    	
+		    	c1.buscartuVehiculo(con);
 		    		//CONTECTAR CON BASE DE DATOS Y MOSTRAR POR PANTALLA INFORMACIÓN DEL VEHÍCULO DEL CLIENTE
 		    		
 		    	break;
