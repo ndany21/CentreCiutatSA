@@ -68,12 +68,12 @@ public class UsuarioCliente {
 				 
 				 
 				 if (nombreUsuario.equals(nombreIntroducido)&& contrasena.equals(contraseñaIntroducida) && esAdmin.equals("0") ) {
-					salir = menuCliente(con, c1, sc, salir, nombreIntroducido, nombreUsuario, apellidosUsuario); 
+					menuCliente(con, c1, sc, nombreIntroducido, nombreUsuario, apellidosUsuario); 
 					
 
 					}else if(nombreUsuario.equals(nombreIntroducido) && esAdmin.equals("1")){
 					
-						salir = menuAdmin(con, a1,sc, salir); 	    	 
+						menuAdmin(con, a1, sc); 	    	 
 					}
 					else {System.out.println("No se encuentra en la base de datos  ");}
 				 
@@ -107,9 +107,9 @@ public class UsuarioCliente {
 
 
 
-	public static boolean menuAdmin(Connection con, Administrador a1,Scanner sc, boolean salir) throws SQLException {
+	public static void menuAdmin(Connection con, Administrador a1,Scanner sc) throws SQLException {
 		int opcion;
-		while(!salir){
+		
 			System.out.println("========== Bienvenid@  ==========");
 			System.out.println(" ");
 		    System.out.println("(Seleccione la opción que desee con ");
@@ -130,43 +130,47 @@ public class UsuarioCliente {
 		    	
 		    		//CONTECTAR CON BASE DE DATOS Y MOSTRAR POR PATNALLA LISTADO DE ALQUILERES
 		    		a1.listarAlquiler(con);
+		    		menuAdmin(con, a1, sc);
 		    		
 		    	break;
 			case 2:
 				
 				
 					//CONTECTAR CON BASE DE DATOS PARA EDITAR ALQUILERES
+				menuAdmin(con, a1, sc);
 				
 		    	break;  
 			case 3:
 				a1.eliminarAlquiler(con);
+				menuAdmin(con, a1, sc);
 				//CONTECTAR CON BASE DE DATOS PARA ELIMINAR ALQUILERES
 				
 				break;
 			case 4:
 		    	a1.crearUsuario(con);
+		    	menuAdmin(con, a1, sc);
 				//CONTECTAR CON BASE DE DATOS PARA CREAR USUARIO
 				
 				break;
 		 	case 5:                      	 
-		    	salir=true;
-		    	System.out.println("CERRANDO SESIÓN");
+		    	System.out.println("CERRANDO SESIÓN...");
+		    	
 		    	
 		    	break;
 		 	default:
 		    	System.out.println("Solo números entre 1 y 5");
 		    	System.out.println(" ");  	 
+		    	menuAdmin(con, a1, sc);
 		  	 
 		  	}	 
-			}
-		return salir;
+			
 	}
 	
 	
 	
 	 
 
-	public static boolean menuCliente(Connection con, Cliente c1, Scanner sc, boolean salir, String nombreIntroducido,
+	public static void menuCliente(Connection con, Cliente c1, Scanner sc, String nombreIntroducido,
 			String nombreUsuario, String apellidosUsuario) throws SQLException {
 		int opcion;
 		//SQL que recoga los datos y poner el nombre del usuario 
@@ -176,7 +180,7 @@ public class UsuarioCliente {
 		  	
 			
 		  	 
-			while(!salir){
+			
 			System.out.println("========== QUE DESEA HACER? ==========");
 			System.out.println(" ");
 		    System.out.println("(Seleccione la opción que desee con ");
@@ -194,6 +198,7 @@ public class UsuarioCliente {
 			switch(opcion){
 		    	case 1:
 		    	c1.buscartuVehiculo(con);
+		    	menuCliente(con, c1, sc, nombreIntroducido, nombreUsuario, apellidosUsuario);
 		    		//CONTECTAR CON BASE DE DATOS Y MOSTRAR POR PANTALLA INFORMACIÓN DEL VEHÍCULO DEL CLIENTE
 		    		
 		    	break;
@@ -202,10 +207,11 @@ public class UsuarioCliente {
 					//CONTECTAR CON BASE DE DATOS Y MOSTRAR POR PANTALLA INFORMACIÓN DEL CLIENTE 
 				
 				c1.buscartuInformacion(con);
+				menuCliente(con, c1, sc, nombreIntroducido, nombreUsuario, apellidosUsuario);
 				
 		    	break;       	
 		 	case 3:                      	 
-		    	salir=true;
+		    	
 		    	System.out.println("== SALIENDO DEL PROGRAMA ==");
 		    	System.out.println(" ");
 		    	System.out.println("Gracias por tu colaboración " +nombreIntroducido+ ", que tengas un buen dia");
@@ -214,10 +220,11 @@ public class UsuarioCliente {
 		 	default:
 		    	System.out.println("Solo números entre 1 y 3");
 		    	System.out.println(" ");  	 
+		    	menuCliente(con, c1, sc, nombreIntroducido, nombreUsuario, apellidosUsuario);
 		  	 
 		  	}	 
-			}
-		return salir;
+			
+	
 	}
 	}	 
 
