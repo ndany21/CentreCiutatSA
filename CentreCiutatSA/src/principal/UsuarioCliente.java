@@ -10,12 +10,13 @@ public class UsuarioCliente {
 	public static void main(String[] args) {
 
 		try {
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/centreciutat", "root", "");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:8889/CentreCiutat", "tur", "tur");
 			System.out.println("Conexión establecida con la base de datos CentreCiutat S.A.");
 			
 			
 			Cliente c1 = new Cliente();
 			Administrador a1 = new Administrador();
+			
 			Scanner sc = new Scanner(System.in);
 			
 			
@@ -74,13 +75,10 @@ public class UsuarioCliente {
 					
 						salir = menuAdmin(con, a1,sc, salir); 	    	 
 					}
+					else {System.out.println("No se encuentra en la base de datos  ");}
 				 
 				 
 				 
-				 else {
-						System.out.println("No se encuentra en la base de datos  ");
-					 }
-				  	
 				
 			}
 		  	
@@ -99,7 +97,7 @@ public class UsuarioCliente {
 			System.out.println("Error connexión BBDD");
 			e.printStackTrace();
 		}
-
+		
 	
 	
 	
@@ -136,24 +134,24 @@ public class UsuarioCliente {
 		    	break;
 			case 2:
 				
+				
 					//CONTECTAR CON BASE DE DATOS PARA EDITAR ALQUILERES
 				
 		    	break;  
 			case 3:
-				
+				a1.eliminarAlquiler(con);
 				//CONTECTAR CON BASE DE DATOS PARA ELIMINAR ALQUILERES
 				
 				break;
 			case 4:
-		    	
+		    	a1.crearUsuario(con);
 				//CONTECTAR CON BASE DE DATOS PARA CREAR USUARIO
 				
 				break;
 		 	case 5:                      	 
 		    	salir=true;
-		    	System.out.println("== SALIENDO DEL PROGRAMA ==");
-		    	System.out.println(" ");
-		    	System.out.println("Gracias por tu colaboración, que tengas un buen dia");
+		    	System.out.println("CERRANDO SESIÓN");
+		    	
 		    	break;
 		 	default:
 		    	System.out.println("Solo números entre 1 y 5");

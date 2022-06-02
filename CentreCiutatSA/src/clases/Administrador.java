@@ -17,6 +17,7 @@ public class Administrador extends Persona{
 		super(nombre, apellidos, dni, direccion, cuentaCorriente);
 		this.usuario = usuario;
 		this.contrasena = contrasena;
+		
 	}
 
 public Administrador() {
@@ -39,13 +40,210 @@ public Administrador() {
 		this.contrasena = contrasena;
 	}
 	
-	public void alquilarParking() {
-		
-	}
 	
-	public void editarAlquiler() {
-			
-	}
+	public void crearUsuario(Connection con) {
+		Scanner sc = new Scanner(System.in);
+        boolean salir = false;
+        int opcion;
+        String nombre ="";
+        String apellido ="";
+        String dni ="";
+        String psw ="";
+        String direccion ="";
+        String cuenta ="";
+        String matricula ="";
+        String idStacionamiento ="";
+           
+        
+        while(!salir){
+        System.out.println("========== CREAR USUARIO ==========");
+        System.out.println(" ");
+        System.out.println(" Selecciona el tipo de usuario que ");
+        System.out.println(" desea crear");
+        System.out.println(" ");
+        System.out.println(" 1) Administrador");
+        System.out.println(" 2) Cliente");
+        System.out.println(" 3) salir ");
+        System.out.println(" ");
+        System.out.println("======================================");
+        System.out.println(" ");
+        System.out.print("->");
+        
+        opcion = sc.nextInt();
+        sc.nextLine();
+
+        switch(opcion){
+            case 1:
+                
+                System.out.println("");
+                System.out.println("======= USUARIO ADMINISTRADOR =======");
+                System.out.println(" ");
+                System.out.println(" Introduce los datos que se le piden");
+                System.out.println(" ");
+                System.out.println(" ");
+               
+                System.out.println("  NOMBRE: ");
+                nombre= sc.nextLine();
+               
+                System.out.println(" ");
+                System.out.println(" APELLIDOS:  ");
+                apellido= sc.nextLine();
+           
+                System.out.println(" ");
+                System.out.println(" CONTRASEÑA: "); 
+                psw= sc.nextLine();
+            
+                System.out.println(" ");
+                System.out.println(" DNI: "); 
+                dni= sc.nextLine();
+                
+                System.out.println(" ");
+                System.out.println(" DIRECCÓN: ");
+                direccion= sc.nextLine();
+             
+               	System.out.println(" ");
+                System.out.println(" CUENTA CORRIENTE: "); 
+                cuenta= sc.nextLine();
+              
+                System.out.println("");
+             	System.out.println("Usuario administrador creado correctamente !!");
+             	Statement stmt = null;
+
+        		try {
+
+        			stmt = con.createStatement();
+        			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+        			ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios");
+
+        			// Nos posicionamos con el cursor en la próxima fila vacía de la tabla
+        			rs.moveToInsertRow();
+        			// Actualizamos los campos con los datos pasados por parámetro en la llamada al método
+        			rs.updateString("dni", dni);
+        			rs.updateString("nombre", nombre);
+        			rs.updateString("apellidos", apellido);
+        			rs.updateString("direccion", direccion);
+        			rs.updateString("cuentaCorriente", cuenta);
+        			rs.updateString("matricula", null);
+        			rs.updateInt("admin", 1);
+        			rs.updateString("idEstacionamiento", null);
+        			rs.updateString("contrasena", psw);
+        			// Insertamos la nueva fila (nuevo jugador) con los datos proporcionados
+        			rs.insertRow();
+        			// Nos posicionamos con el cursor antes de la primera fila
+        			rs.beforeFirst();
+
+        			System.out.println("");
+        			System.out.println("Se ha insertado correctamente el nuevo usuario " + nombre + "!");
+
+        		} catch (SQLException e) {
+        			e.printStackTrace();
+        		} finally {
+        			try {
+        				stmt.close();
+        			} catch (SQLException e) {
+        				// TODO Auto-generated catch block
+        				e.printStackTrace();
+        			}
+        		}
+                break;
+        case 2:
+            
+        	System.out.println("");
+            System.out.println("======= USUARIO ADMINISTRADOR =======");
+            System.out.println(" ");
+            System.out.println(" Introduce los datos que se le piden");
+            System.out.println(" ");
+            System.out.println(" ");
+           
+            System.out.println("  NOMBRE: ");
+            nombre= sc.nextLine();
+            
+            System.out.println(" ");
+            System.out.println(" APELLIDOS:  ");
+            apellido= sc.nextLine();
+            
+            System.out.println(" ");
+            System.out.println(" CONTRASEÑA: "); 
+            psw= sc.nextLine();
+         
+            System.out.println(" ");
+            System.out.println(" DNI: "); 
+            dni= sc.nextLine();
+          
+            System.out.println(" ");
+            System.out.println(" DIRECCÓN: ");
+            direccion= sc.nextLine();
+          
+           	System.out.println(" ");
+            System.out.println(" CUENTA CORRIENTE: "); 
+            cuenta= sc.nextLine();
+        
+            System.out.println(" ");
+            System.out.println(" MATRICULA: "); 
+            matricula= sc.nextLine();
+           
+            System.out.println("");
+         	System.out.println(" ID ESTACIONAMIENTO: "); 
+         	System.out.println("");
+         	idStacionamiento = sc.nextLine();
+         	
+         	System.out.println("Usuario cliente creado correctamente !!");
+         	Statement stmt2 = null;
+
+    		try {
+
+    			stmt = con.createStatement();
+    			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+    			ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios");
+
+    			// Nos posicionamos con el cursor en la próxima fila vacía de la tabla
+    			rs.moveToInsertRow();
+    			// Actualizamos los campos con los datos pasados por parámetro en la llamada al método
+    			rs.updateString("dni", dni);
+    			rs.updateString("nombre", nombre);
+    			rs.updateString("apellidos", apellido);
+    			rs.updateString("direccion", direccion);
+    			rs.updateString("cuentaCorriente", cuenta);
+    			rs.updateString("matricula", matricula);
+    			rs.updateInt("admin", 0);
+    			rs.updateString("idEstacionamiento", idStacionamiento);
+    			rs.updateString("contrasena", psw);
+    			// Insertamos la nueva fila (nuevo jugador) con los datos proporcionados
+    			rs.insertRow();
+    			// Nos posicionamos con el cursor antes de la primera fila
+    			rs.beforeFirst();
+
+    			System.out.println("");
+    			System.out.println("Se ha insertado correctamente el nuevo usuario " + nombre + "!");
+
+    		} catch (SQLException e) {
+    			e.printStackTrace();
+    		} finally {
+    			try {
+    				stmt2.close();
+    			} catch (SQLException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+    		}
+            break;  
+        
+         case 3:                           
+            salir=true;
+            System.out.println("== SALIENDO DEL PROGRAMA ==");
+            System.out.println(" ");
+            System.out.println("Gracias por tu colaboración, que tengas un buen dia");
+            break;
+         default:
+            System.out.println("Solo números entre 1 y 3");
+            System.out.println(" ");       
+           
+          }   } 
+        
+        
+        }
 	
 	public void eliminarAlquiler(Connection con) {
 
@@ -67,7 +265,7 @@ public Administrador() {
 			System.out.println(" ");
 			System.out.println(" ");
 			System.out.println("1. Si");
-			System.out.println("1. No");
+			System.out.println("2. No");
 			System.out.print("Opción:");
 			opcion= teclado.nextInt();
 			
