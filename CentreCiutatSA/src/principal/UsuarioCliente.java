@@ -33,10 +33,12 @@ public class UsuarioCliente {
 		  	System.out.println(" ");
 		  	System.out.println("==        Cual es su nombre?        ==");
 		  	System.out.println(" ");
+		  	System.out.print("Introduce tu nombre: ");
 		  	String nombreIntroducido = sc.nextLine();
 		  	System.out.println(" ");
 		  	System.out.println("==            Contraseña             ==");
 		  	System.out.println(" ");
+		  	System.out.print("Introduce tu contraseña: ");
 		  	String contraseñaIntroducida = sc.nextLine();
 		  	
 		  	System.out.println(" ");

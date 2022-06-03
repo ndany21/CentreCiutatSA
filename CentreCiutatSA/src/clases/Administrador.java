@@ -302,15 +302,20 @@ public Administrador() {
 		Statement stmt = null;
 		String query = "select idAlquiler, idEstacionamiento, precioMensual, dni, matricula from alquiler";
 
+
+		
+		
 		try {
 
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			String listado = "";
 
+			
 			System.out.println("");
 			System.out.println("**** LISTA DE ALQUILERES ****");
-			listado += "**** LISTA DE ALQUILERES ****\n";
+			
+			//listado += "**** LISTA DE ALQUILERES ****\n";
 
 			while (rs.next()) {
 
@@ -335,22 +340,32 @@ public Administrador() {
 
 				System.out.println("*************************************");
 				listado +=  
-						 "\n"
-						+ "*****************************\n"
-						+ "Id: " + idAlquiler +"\n"
+					
+						 "Id: " + idAlquiler +"\n"
 						+ "Precio Mensual: " + precioMensual+"\n"
 						+ " DNI: " + dni + "\n"
 						+ " Matricula: " + matricula + "\n";
 				
 			}
-			System.out.println("");
-			System.out.println("¿Quieres exportar el listado?");
-			System.out.println("         1) Si               ");
-			System.out.println("         2) No               ");
-			int opcion = teclado.nextInt();
-			if(opcion == 1){
-				ficherotxt(listado);
+			if(listado.equals("")) {
+				System.out.println("\n\n");
+				System.out.println("No hay alquileres");
+				}
+			else {
+				
+				String temp = "**** LISTA DE ALQUILERES ****\n";
+				temp += listado;
+				System.out.println("");
+				System.out.println("¿Quieres exportar el listado?");
+				System.out.println("         1) Si               ");
+				System.out.println("         2) No               ");
+				int opcion = teclado.nextInt();
+				if(opcion == 1){
+					ficherotxt(temp);
+				}
 			}
+			
+			
 			
 
 		} catch (SQLException e) {
@@ -364,7 +379,7 @@ public Administrador() {
 	public void ficherotxt(String listado) {
 		FileOutputStream f = null;
 		try {
-			 f = new FileOutputStream("listado3.txt", true);
+			 f = new FileOutputStream("listado.txt", true);
 			for (int i = 0; i < listado.length(); i++) {
 				char c = listado.charAt(i);
 				f.write((byte) c);
