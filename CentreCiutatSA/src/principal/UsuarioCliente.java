@@ -13,23 +13,26 @@ public class UsuarioCliente {
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:8889/CentreCiutat", "tur", "tur");
 			System.out.println("Conexión establecida con la base de datos CentreCiutat S.A.");
 
-			Cliente c1 = new Cliente();
-			Administrador a1 = new Administrador();
+			
 
 			Scanner sc = new Scanner(System.in);
 
 			int opcion;
 
-			login(con, c1, a1, sc);
+			login(con, sc);
 
 		} catch (SQLException e) {
 			System.out.println("Error connexión BBDD");
 			e.printStackTrace();
 		}
 
+		
 	}
 
-	public static void login(Connection con, Cliente c1, Administrador a1, Scanner sc) throws SQLException {
+	public static void login(Connection con, Scanner sc) throws SQLException {
+		
+		Cliente c1 = new Cliente();
+		Administrador a1 = new Administrador();
 		System.out.println(" ");
 		System.out.println(" ");
 		System.out.println("======================================");
@@ -72,7 +75,7 @@ public class UsuarioCliente {
 
 			if (rs.next() == false) {
 				System.out.println("No se encuentra en la base de datos  ");
-				login(con, c1, a1, sc);
+				login(con, sc);
 
 			} else {
 
@@ -151,7 +154,7 @@ public class UsuarioCliente {
 		case 5:
 			System.out.println("CERRANDO SESIÓN...");
 			System.out.println("");
-			login(con, null, a1, sc);
+			login(con, sc);
 
 			break;
 		default:
@@ -207,7 +210,7 @@ public class UsuarioCliente {
 			System.out.println("");
 			System.out.println("Gracias por tu colaboración " + nombreIntroducido + ", que tengas un buen dia");
 			System.out.println("");
-			login(con, c1, null, sc);
+			login(con, sc);
 			break;
 		default:
 			System.out.println("Solo números entre 1 y 3");

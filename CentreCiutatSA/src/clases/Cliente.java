@@ -44,6 +44,7 @@ public class Cliente extends Persona {
 		Statement stmt = null;
 
 		Scanner teclado = new Scanner(System.in);
+		
 		System.out.println(" Introduce tu DNI: ");
 		dni = teclado.nextLine();
 

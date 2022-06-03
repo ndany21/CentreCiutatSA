@@ -381,6 +381,7 @@ public Administrador() {
 			stmt.close();
 		}
 
+		
 	}
 	
 	public void ficherotxt(String listado) {
