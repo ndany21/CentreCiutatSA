@@ -410,7 +410,8 @@ public Administrador() {
 	public void editarAlquiler(Connection con) throws SQLException {
 
  		Scanner teclado = new Scanner(System.in);
- 		System.out.println("Introduce el Id del Alquiler para editar: ");
+ 		System.out.print("Introduce el Id del Alquiler para editar: ");
+ 		System.out.println("");
  		int id = 0;
  		id = teclado.nextInt();
 
@@ -421,19 +422,25 @@ public Administrador() {
  		try {
  			int opcion;			
 
- 			System.out.println("¿Qué deseas editar?");
+ 			
+ 			System.out.println("");
  			System.out.println("1) Estacionamiento");
  			System.out.println("2) Precio Mensual");
  			System.out.println("3) DNI");
  			System.out.println("4) Matricula");
  			System.out.println("5) Salir");
+ 			System.out.println("");
+ 			System.out.print("¿Qué deseas editar?: ");
  			opcion = teclado.nextInt();
  			teclado.nextLine();
+ 			System.out.println("");
  			switch (opcion) {
  			case 1:
  				System.out.print(" Escribe el nuevo estacionamiento: ");
+ 				
  				String estacionamiento = "";
  				estacionamiento = teclado.nextLine();
+ 				System.out.println("");
 
  				stmt= con.createStatement();
  				stmt.executeUpdate("UPDATE `alquiler` SET `idEstacionamiento` = '" + estacionamiento +"' WHERE `alquiler`.`idAlquiler` = " + id); 
@@ -442,30 +449,42 @@ public Administrador() {
  				break;
  			case 2:
  				System.out.print(" Escribe el nuevo precio mensual: ");
- 				int precioMensual= teclado.nextInt();
+ 				
+ 				double precioMensual= teclado.nextDouble();
+ 				System.out.println("");
 
  				stmt= con.createStatement();
  				stmt.executeUpdate("UPDATE `alquiler` SET `precioMensual` = '" + precioMensual +"' WHERE `alquiler`.`idAlquiler` = " + id);
+ 				System.out.println("Valor editado correctamente.");
+ 				System.out.println(" ");
  				break;
  			case 3:
  				System.out.print(" Escribe el nuevo DNI: ");
+ 				
  				String dni= teclado.nextLine();
+ 				System.out.println("");
 
  				stmt= con.createStatement();
  				stmt.executeUpdate("UPDATE `alquiler` SET `dni` = '" + dni +"' WHERE `alquiler`.`idAlquiler` = " + id);
+ 				System.out.println("Valor editado correctamente.");
+ 				System.out.println(" ");
  				break;
  			case 4:
  				System.out.print(" Escribe la nueva matricula: ");
+ 				
  				String matricula= teclado.nextLine();
+ 				System.out.println("");
 
 
  				stmt= con.createStatement();
  				stmt.executeUpdate("UPDATE `alquiler` SET `matricula` = '" + matricula +"' WHERE `alquiler`.`idAlquiler` = " + id);
+ 				System.out.println("Valor editado correctamente.");
+ 				System.out.println(" ");
  				break;
  			case 5:
  				System.out.print("Saliendo...");
- 				System.exit(0);
-
+ 				System.out.println("");
+ 				
 
  				break;
  			default:

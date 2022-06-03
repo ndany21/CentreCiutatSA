@@ -59,12 +59,14 @@ public class Cliente extends Persona {
 				System.out.println(" ");
 				System.out.println("======================================");
 				System.out.println("======================================");
+				System.out.println("");
 				System.out.println(" == USUARIO CLIENTE == ");
 				System.out.println("\n Nombre: " + rs.getString("nombre"));
 				System.out.println("\n Apellido: " + rs.getString("apellidos"));
 				System.out.println("\n DNI: " + rs.getString("dni"));
 				System.out.println("\n Dirección " + rs.getString("direccion"));
 				System.out.println("\n Cuenta Corriente: " + rs.getString("cuentaCorriente"));
+				System.out.println("");
 				System.out.println("======================================");
 				System.out.println("======================================");
 				System.out.println("");
