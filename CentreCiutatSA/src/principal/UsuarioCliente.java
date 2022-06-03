@@ -136,8 +136,8 @@ public class UsuarioCliente {
 		    		
 		    	break;
 			case 2:
-				
-				
+					
+				a1.editarAlquiler(con);
 					//CONTECTAR CON BASE DE DATOS PARA EDITAR ALQUILERES
 				menuAdmin(con, a1, sc);
 				

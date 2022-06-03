@@ -400,7 +400,84 @@ public Administrador() {
 		
 	}
 	
-	
-	//
+	public void editarAlquiler(Connection con) throws SQLException {
+		
+		Scanner teclado = new Scanner(System.in);
+		System.out.println("Introduce el Id del Alquiler para editar: ");
+		int id = 0;
+		id = teclado.nextInt();
+		
+		teclado.nextLine(); // evitar errores
+		
+		Statement stmt = null;
+		
+		try {
+			int opcion;			
+			
+			System.out.println("¿Qué deseas editar?");
+			System.out.println("1) Estacionamiento");
+			System.out.println("2) Precio Mensual");
+			System.out.println("3) DNI");
+			System.out.println("4) Matricula");
+			System.out.println("5) Salir");
+			opcion = teclado.nextInt();
+			teclado.nextLine();
+			switch (opcion) {
+			case 1:
+				System.out.print(" Escribe el nuevo estacionamiento: ");
+				String estacionamiento = "";
+				estacionamiento = teclado.nextLine();
+				
+				stmt= con.createStatement();
+				stmt.executeUpdate("UPDATE `alquiler` SET `idEstacionamiento` = '" + estacionamiento +"' WHERE `alquiler`.`idAlquiler` = " + id); 
+				System.out.println("Valor editado correctamente.");
+				System.out.println(" ");
+				break;
+			case 2:
+				System.out.print(" Escribe el nuevo precio mensual: ");
+				int precioMensual= teclado.nextInt();
+				
+				stmt= con.createStatement();
+				stmt.executeUpdate("UPDATE `alquiler` SET `precioMensual` = '" + precioMensual +"' WHERE `alquiler`.`idAlquiler` = " + id);
+				break;
+			case 3:
+				System.out.print(" Escribe el nuevo DNI: ");
+				String dni= teclado.nextLine();
+				
+				stmt= con.createStatement();
+				stmt.executeUpdate("UPDATE `alquiler` SET `dni` = '" + dni +"' WHERE `alquiler`.`idAlquiler` = " + id);
+				break;
+			case 4:
+				System.out.print(" Escribe la nueva matricula: ");
+				String matricula= teclado.nextLine();
+				
+				
+				stmt= con.createStatement();
+				stmt.executeUpdate("UPDATE `alquiler` SET `matricula` = '" + matricula +"' WHERE `alquiler`.`idAlquiler` = " + id);
+				break;
+			case 5:
+				System.out.print("Saliendo...");
+				System.exit(0);
+				
+				
+				break;
+			default:
+				System.out.println("Solo números entre 1 y 5");
+		    	System.out.println(" ");  	
+				break;
+			}
+				
+		} catch (SQLException e) { 
+
+		}
+		finally {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+   }
 	
 }
