@@ -20,75 +20,10 @@ public class UsuarioCliente {
 			Scanner sc = new Scanner(System.in);
 			
 			
-			boolean salir = false;
 			int opcion;
 			
 			
-			System.out.println(" ");
-			System.out.println(" ");
-		  	System.out.println("======================================");
-		  	System.out.println("========| Centre Ciutat S.A. |========");
-		  	System.out.println("======================================");
-		  	System.out.println(" ");
-		  	System.out.println(" ");
-		  	System.out.println("==        Cual es su nombre?        ==");
-		  	System.out.println(" ");
-		  	System.out.print("Introduce tu nombre: ");
-		  	String nombreIntroducido = sc.nextLine();
-		  	System.out.println(" ");
-		  	System.out.println("==            Contraseña             ==");
-		  	System.out.println(" ");
-		  	System.out.print("Introduce tu contraseña: ");
-		  	String contraseñaIntroducida = sc.nextLine();
-		  	
-		  	System.out.println(" ");
-		  	System.out.println(" ");
-		  	System.out.println(" ");
-		  	System.out.println(" ");
-			
-			Statement stmt = null;
-			
-			String query = "SELECT nombre, apellidos, admin, contrasena from usuarios where nombre = " + "'"
-					+ nombreIntroducido + "'";
-		  	try {
-		  
-		  	
-		  	stmt= con.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			
-			String nombreUsuario = "";
-			String apellidosUsuario = "";
-			String esAdmin = "";
-			String contrasena = "";
-			
-			
-			while (rs.next()) {
-				 nombreUsuario = rs.getString("nombre");
-				 esAdmin = rs.getString("admin");
-				 apellidosUsuario = rs.getString("apellidos");
-				 contrasena = rs.getString("contrasena");
-				 
-				 
-				 if (nombreUsuario.equals(nombreIntroducido)&& contrasena.equals(contraseñaIntroducida) && esAdmin.equals("0") ) {
-					menuCliente(con, c1, sc, nombreIntroducido, nombreUsuario, apellidosUsuario); 
-					
-
-					}else if(nombreUsuario.equals(nombreIntroducido) && esAdmin.equals("1")){
-					
-						menuAdmin(con, a1, sc); 	    	 
-					}
-					else {System.out.println("No se encuentra en la base de datos  ");}
-				 
-				 
-				 
-				
-			}
-		  	
-		} catch (Exception e) {
-			// TODO: handle exception
-		} finally {
-			stmt.close();
-		}
+			login(con, c1, a1, sc);
 			
 			
 			
@@ -104,6 +39,85 @@ public class UsuarioCliente {
 	
 	
 		    }
+
+
+
+
+
+	public static void login(Connection con, Cliente c1, Administrador a1, Scanner sc) throws SQLException {
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println("======================================");
+		System.out.println("========| Centre Ciutat S.A. |========");
+		System.out.println("======================================");
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println("==        Cual es su nombre?        ==");
+		System.out.println(" ");
+		System.out.print("Introduce tu nombre: ");
+		String nombreIntroducido = sc.nextLine();
+		System.out.println(" ");
+		System.out.println("==            Contraseña             ==");
+		System.out.println(" ");
+		System.out.print("Introduce tu contraseña: ");
+		String contraseñaIntroducida = sc.nextLine();
+		
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
+		
+		Statement stmt = null;
+		
+		String query = "SELECT nombre, apellidos, admin, contrasena from usuarios where nombre = " + "'"
+				+ nombreIntroducido + "'";
+		try {
+  
+		
+		stmt= con.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		
+		String nombreUsuario = "";
+		String apellidosUsuario = "";
+		String esAdmin = "";
+		String contrasena = "";
+		
+		if (rs.next() ==false) {
+			System.out.println("No se encuentra en la base de datos  ");
+			login(con, c1, a1, sc);
+			
+		}
+		
+		while (rs.next()) {
+			 nombreUsuario = rs.getString("nombre");
+			 esAdmin = rs.getString("admin");
+			 apellidosUsuario = rs.getString("apellidos");
+			 contrasena = rs.getString("contrasena");
+			 
+			 
+			 
+			 if (nombreUsuario.equals(nombreIntroducido)&& contrasena.equals(contraseñaIntroducida) && esAdmin.equals("0") ) {
+				menuCliente(con, c1, sc, nombreIntroducido, nombreUsuario, apellidosUsuario); 
+				
+
+				}else if(nombreUsuario.equals(nombreIntroducido) && esAdmin.equals("1")){
+				
+					menuAdmin(con, a1, sc); 	    	 
+				}
+				else {System.out.println("No se encuentra en la base de datos  ");}
+			 
+			 
+			 
+			
+		}
+		
+} catch (Exception e) {
+		System.out.println("No se encuentra en la base de datos  ");
+		e.getMessage();
+} finally {
+		stmt.close();
+}
+	}
 
 
 
@@ -136,8 +150,8 @@ public class UsuarioCliente {
 		    		
 		    	break;
 			case 2:
-					
-				a1.editarAlquiler(con);
+				
+				
 					//CONTECTAR CON BASE DE DATOS PARA EDITAR ALQUILERES
 				menuAdmin(con, a1, sc);
 				
@@ -211,6 +225,7 @@ public class UsuarioCliente {
 				c1.buscartuInformacion(con);
 				menuCliente(con, c1, sc, nombreIntroducido, nombreUsuario, apellidosUsuario);
 				
+				
 		    	break;       	
 		 	case 3:                      	 
 		    	
@@ -229,5 +244,4 @@ public class UsuarioCliente {
 	
 	}
 	}	 
-
 
