@@ -157,53 +157,53 @@ public Administrador() {
         case 2:
             
         	System.out.println("");
-            System.out.println("======= USUARIO ADMINISTRADOR =======");
+            System.out.println("======= USUARIO CLIENTE =======");
             System.out.println(" ");
             System.out.println(" Introduce los datos que se le piden");
             System.out.println(" ");
             System.out.println(" ");
            
-            System.out.println("  NOMBRE: ");
+            System.out.print("  NOMBRE: ");
             nombre= sc.nextLine();
             
             System.out.println(" ");
-            System.out.println(" APELLIDOS:  ");
+            System.out.print(" APELLIDOS:  ");
             apellido= sc.nextLine();
             
             System.out.println(" ");
-            System.out.println(" CONTRASEÑA: "); 
+            System.out.print(" CONTRASEÑA: "); 
             psw= sc.nextLine();
          
             System.out.println(" ");
-            System.out.println(" DNI: "); 
+            System.out.print(" DNI: "); 
             dni= sc.nextLine();
           
             System.out.println(" ");
-            System.out.println(" DIRECCÓN: ");
+            System.out.print(" DIRECCÓN: ");
             direccion= sc.nextLine();
           
            	System.out.println(" ");
-            System.out.println(" CUENTA CORRIENTE: "); 
+            System.out.print(" CUENTA CORRIENTE: "); 
             cuenta= sc.nextLine();
         
             System.out.println(" ");
-            System.out.println(" MATRICULA: "); 
-            matricula= sc.nextLine();
+            System.out.print(" MATRICULA: "); 
+            matricula= sc.nextLine().toUpperCase();
            
             System.out.println("");
-         	System.out.println(" ID ESTACIONAMIENTO: "); 
-         	System.out.println("");
-         	idStacionamiento = sc.nextLine();
+         	System.out.print(" ID ESTACIONAMIENTO: "); 
+         	
+         	idStacionamiento = sc.nextLine().toUpperCase();
          	
          	System.out.println("Usuario cliente creado correctamente !!");
          	Statement stmt2 = null;
 
     		try {
 
-    			stmt = con.createStatement();
-    			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+    			stmt2 = con.createStatement();
+    			stmt2 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-    			ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios");
+    			ResultSet rs = stmt2.executeQuery("SELECT * FROM usuarios");
 
     			// Nos posicionamos con el cursor en la próxima fila vacía de la tabla
     			rs.moveToInsertRow();
@@ -224,6 +224,7 @@ public Administrador() {
 
     			System.out.println("");
     			System.out.println("Se ha insertado correctamente el nuevo usuario " + nombre + "!");
+    			System.out.println("");
 
     		} catch (SQLException e) {
     			e.printStackTrace();

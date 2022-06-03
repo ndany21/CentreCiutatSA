@@ -92,13 +92,13 @@ public class UsuarioCliente {
 
 					menuAdmin(con, a1, sc);
 				} else {
-					System.out.println("No se encuentra en la base de datos  ");
+					System.out.println("No se encuentra en la base de datos GFBGFBFDBGD ");
 				}
 
 			}
 
 		} catch (Exception e) {
-			System.out.println("No se encuentra en la base de datos  ");
+			System.out.println("No se encuentra en la base de datos aquiiiiiiii");
 			e.getMessage();
 		} finally {
 			stmt.close();
@@ -184,6 +184,7 @@ public class UsuarioCliente {
 		System.out.println(" 3) Cerrar sesión ");
 		System.out.println(" ");
 		System.out.println("======================================");
+		
 		System.out.println(" ");
 		opcion = sc.nextInt();
 		sc.nextLine();
