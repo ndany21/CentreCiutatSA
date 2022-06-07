@@ -10,7 +10,7 @@ public class UsuarioCliente {
 	public static void main(String[] args) {
 
 		try {
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:8889/CentreCiutat", "tur", "tur");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/centreciutat", "root", "");
 			System.out.println("Conexión establecida con la base de datos CentreCiutat S.A.");
 
 			
@@ -48,7 +48,7 @@ public class UsuarioCliente {
 		System.out.println("==            Contraseña             ==");
 		System.out.println(" ");
 		System.out.print("Introduce tu contraseña: ");
-		String contraseñaIntroducida = sc.nextLine();
+		String contrasenaIntroducida = sc.nextLine();
 
 		System.out.println(" ");
 		System.out.println(" ");
@@ -84,21 +84,22 @@ public class UsuarioCliente {
 				apellidosUsuario = rs.getString("apellidos");
 				contrasena = rs.getString("contrasena");
 
-				if (nombreUsuario.equals(nombreIntroducido) && contrasena.equals(contraseñaIntroducida)
+				if (nombreUsuario.equals(nombreIntroducido) && contrasena.equals(contrasenaIntroducida)
 						&& esAdmin.equals("0")) {
 					menuCliente(con, c1, sc, nombreIntroducido, nombreUsuario, apellidosUsuario);
 
-				} else if (nombreUsuario.equals(nombreIntroducido) && esAdmin.equals("1")) {
+				} else if (nombreUsuario.equals(nombreIntroducido) && contrasena.equals(contrasenaIntroducida) && esAdmin.equals("1")) {
 
 					menuAdmin(con, a1, sc);
 				} else {
-					System.out.println("No se encuentra en la base de datos GFBGFBFDBGD ");
+					System.out.println("No se encuentra en la base de datos");
+					login(con, sc);
 				}
 
 			}
 
 		} catch (Exception e) {
-			System.out.println("No se encuentra en la base de datos aquiiiiiiii");
+			System.out.println("ERROR! No se encuentra en la base de datos");
 			e.getMessage();
 		} finally {
 			stmt.close();

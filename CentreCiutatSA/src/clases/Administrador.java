@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 package clases;
 
 
@@ -350,7 +343,7 @@ public Administrador() {
 				listado +=  
 					
 						 "Id: " + idAlquiler +"\n"
-						+ "Precio Mensual: " + precioMensual+"\n"
+						+ " Precio Mensual: " + precioMensual+"\n"
 						+ " DNI: " + dni + "\n"
 						+ " Matricula: " + matricula + "\n";
 				
@@ -421,7 +414,7 @@ public Administrador() {
 
  		Statement stmt = null;
 
- 		try {
+ 		
  			int opcion;			
 
  			
@@ -493,21 +486,7 @@ public Administrador() {
  				System.out.println("Solo números entre 1 y 5");
  		    	System.out.println(" ");  	
  				break;
- 			}
-
- 		} catch (SQLException e) { 
-
- 		}
- 		finally {
- 			try {
- 				stmt.close();
- 			} catch (SQLException e) {
- 				// TODO Auto-generated catch block
- 				e.printStackTrace();
- 			}
- 		}
-    }
-	
-	//
-	
+ 			}	
+      }
 }
+
