@@ -1,7 +1,6 @@
 package clases;
 
 
-import java.util.Scanner;
 import java.sql.*;
 import java.io.*;
 import java.util.*;
@@ -42,9 +41,9 @@ public Administrador() {
 	
 	
 	public void crearUsuario(Connection con) {
-		Scanner sc = new Scanner(System.in);
-        boolean salir = false;
-        int opcion;
+		Scanner teclado = new Scanner(System.in);
+        
+        String opcion="";
         String nombre ="";
         String apellido ="";
         String dni ="";
@@ -52,10 +51,11 @@ public Administrador() {
         String direccion ="";
         String cuenta ="";
         String matricula ="";
-        String idStacionamiento ="";
+        String idEstacionamiento ="";
+        boolean valido = false;
+        boolean valido2 = false;
            
         
-        while(!salir){
         System.out.println("========== CREAR USUARIO ==========");
         System.out.println(" ");
         System.out.println(" Selecciona el tipo de usuario que ");
@@ -63,140 +63,64 @@ public Administrador() {
         System.out.println(" ");
         System.out.println(" 1) Administrador");
         System.out.println(" 2) Cliente");
-        System.out.println(" 3) salir ");
+        System.out.println(" 3) Salir ");
         System.out.println(" ");
         System.out.println("======================================");
         System.out.println(" ");
-        System.out.print("->");
-        
-        opcion = sc.nextInt();
-        sc.nextLine();
-
-        switch(opcion){
-            case 1:
-                
-                System.out.println("");
-                System.out.println("======= USUARIO ADMINISTRADOR =======");
-                System.out.println(" ");
-                System.out.println(" Introduce los datos que se le piden");
-                System.out.println(" ");
-                System.out.println(" ");
-               
-                System.out.println("  NOMBRE: ");
-                nombre= sc.nextLine();
-               
-                System.out.println(" ");
-                System.out.println(" APELLIDOS:  ");
-                apellido= sc.nextLine();
-           
-                System.out.println(" ");
-                System.out.println(" CONTRASEÑA: "); 
-                psw= sc.nextLine();
-            
-                System.out.println(" ");
-                System.out.println(" DNI: "); 
-                dni= sc.nextLine();
-                
-                System.out.println(" ");
-                System.out.println(" DIRECCÓN: ");
-                direccion= sc.nextLine();
-             
-               	System.out.println(" ");
-                System.out.println(" CUENTA CORRIENTE: "); 
-                cuenta= sc.nextLine();
-              
-                System.out.println("");
-             	System.out.println("Usuario administrador creado correctamente !!");
-             	Statement stmt = null;
-
-        		try {
-
-        			stmt = con.createStatement();
-        			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-
-        			ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios");
-
-        			// Nos posicionamos con el cursor en la próxima fila vacía de la tabla
-        			rs.moveToInsertRow();
-        			// Actualizamos los campos con los datos pasados por parámetro en la llamada al método
-        			rs.updateString("dni", dni);
-        			rs.updateString("nombre", nombre);
-        			rs.updateString("apellidos", apellido);
-        			rs.updateString("direccion", direccion);
-        			rs.updateString("cuentaCorriente", cuenta);
-        			rs.updateString("matricula", null);
-        			rs.updateInt("admin", 1);
-        			rs.updateString("idEstacionamiento", null);
-        			rs.updateString("contrasena", psw);
-        			// Insertamos la nueva fila (nuevo jugador) con los datos proporcionados
-        			rs.insertRow();
-        			// Nos posicionamos con el cursor antes de la primera fila
-        			rs.beforeFirst();
-
-        			System.out.println("");
-        			System.out.println("Se ha insertado correctamente el nuevo usuario " + nombre + "!");
-
-        		} catch (SQLException e) {
-        			e.printStackTrace();
-        		} finally {
-        			try {
-        				stmt.close();
-        			} catch (SQLException e) {
-        				// TODO Auto-generated catch block
-        				e.printStackTrace();
-        			}
-        		}
-                break;
-        case 2:
-            
-        	System.out.println("");
-            System.out.println("======= USUARIO CLIENTE =======");
+        System.out.print("Opción: ");
+        opcion = teclado.nextLine();
+        if(opcion=="") {
+			System.out.println("Solo números entre 1 y 3");
+			System.out.println(" ");
+			crearUsuario(con);
+		}else {
+		
+	
+		if (opcion.charAt(0)=='1') {
+		
+			System.out.println("");
+            System.out.println("======= USUARIO ADMINISTRADOR =======");
             System.out.println(" ");
             System.out.println(" Introduce los datos que se le piden");
             System.out.println(" ");
             System.out.println(" ");
            
             System.out.print("  NOMBRE: ");
-            nombre= sc.nextLine();
-            
+            nombre= teclado.nextLine();
+           
             System.out.println(" ");
             System.out.print(" APELLIDOS:  ");
-            apellido= sc.nextLine();
-            
+            apellido= teclado.nextLine();
+       
             System.out.println(" ");
             System.out.print(" CONTRASEÑA: "); 
-            psw= sc.nextLine();
-         
-            System.out.println(" ");
-            System.out.print(" DNI: "); 
-            dni= sc.nextLine();
-          
-            System.out.println(" ");
-            System.out.print(" DIRECCÓN: ");
-            direccion= sc.nextLine();
-          
-           	System.out.println(" ");
-            System.out.print(" CUENTA CORRIENTE: "); 
-            cuenta= sc.nextLine();
+            psw= teclado.nextLine();
         
             System.out.println(" ");
-            System.out.print(" MATRICULA: "); 
-            matricula= sc.nextLine().toUpperCase();
-           
-            System.out.println("");
-         	System.out.print(" ID ESTACIONAMIENTO: "); 
-         	
-         	idStacionamiento = sc.nextLine().toUpperCase();
-         	
-         	System.out.println("Usuario cliente creado correctamente !!");
-         	Statement stmt2 = null;
+            System.out.print(" DNI: "); 
+            dni= teclado.nextLine();
+            if(dni == "") {
+            System.out.println(" DNI Obligatorio");
+            System.out.println(" ");
+            }else {
+            
+            System.out.println(" ");
+            System.out.print(" DIRECCÓN: ");
+            direccion= teclado.nextLine();
+         
+           	System.out.println(" ");
+            System.out.print(" CUENTA CORRIENTE: "); 
+            cuenta= teclado.nextLine();
+          
+            
+         	Statement stmt = null;
 
     		try {
 
-    			stmt2 = con.createStatement();
-    			stmt2 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+    			stmt = con.createStatement();
+    			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-    			ResultSet rs = stmt2.executeQuery("SELECT * FROM usuarios");
+    			ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios");
 
     			// Nos posicionamos con el cursor en la próxima fila vacía de la tabla
     			rs.moveToInsertRow();
@@ -206,9 +130,9 @@ public Administrador() {
     			rs.updateString("apellidos", apellido);
     			rs.updateString("direccion", direccion);
     			rs.updateString("cuentaCorriente", cuenta);
-    			rs.updateString("matricula", matricula);
-    			rs.updateInt("admin", 0);
-    			rs.updateString("idEstacionamiento", idStacionamiento);
+    			rs.updateString("matricula", null);
+    			rs.updateInt("admin", 1);
+    			rs.updateString("idEstacionamiento", null);
     			rs.updateString("contrasena", psw);
     			// Insertamos la nueva fila (nuevo jugador) con los datos proporcionados
     			rs.insertRow();
@@ -217,50 +141,174 @@ public Administrador() {
 
     			System.out.println("");
     			System.out.println("Se ha insertado correctamente el nuevo usuario " + nombre + "!");
-    			System.out.println("");
 
     		} catch (SQLException e) {
-    			e.printStackTrace();
+    			printSQLException(e);
     		} finally {
     			try {
-    				stmt2.close();
+    				stmt.close();
     			} catch (SQLException e) {
     				// TODO Auto-generated catch block
-    				e.printStackTrace();
+    				printSQLException(e);
     			}
     		}
-            break;  
-        
-         case 3:                           
-            salir=true;
-            System.out.println("== SALIENDO DEL PROGRAMA ==");
-            System.out.println(" ");
-            System.out.println("Gracias por tu colaboración, que tengas un buen dia");
-            break;
-         default:
-            System.out.println("Solo números entre 1 y 3");
-            System.out.println(" ");       
-           
-          }   } 
-        
-        
-        }
-	
-	public void eliminarAlquiler(Connection con) {
+          }
+		}
+			else if(opcion.charAt(0)=='2') {
+
+				System.out.println("");
+	            System.out.println("======= USUARIO CLIENTE =======");
+	            System.out.println(" ");
+	            System.out.println(" Introduce los datos que se le piden");
+	            System.out.println(" ");
+	            System.out.println(" ");
+	           
+	            System.out.print("  NOMBRE: ");
+	            nombre= teclado.nextLine();
+	            
+	            System.out.println(" ");
+	            System.out.print(" APELLIDOS:  ");
+	            apellido= teclado.nextLine();
+	            
+	            System.out.println(" ");
+	            System.out.print(" CONTRASEÑA: "); 
+	            psw= teclado.nextLine();
+	         
+	            System.out.println(" ");
+	            System.out.print(" DNI: "); 
+	            dni= teclado.nextLine();
+	            if(dni == "") {
+	                System.out.println(" DNI Obligatorio");
+	                System.out.println(" ");
+	             }else {
+	          
+	            System.out.println(" ");
+	            System.out.print(" DIRECCÓN: ");
+	            direccion= teclado.nextLine();
+	          
+	           	System.out.println(" ");
+	            System.out.print(" CUENTA CORRIENTE: "); 
+	            cuenta= teclado.nextLine();
+	            while(!valido) {
+	            System.out.println(" ");
+	            System.out.print(" MATRICULA: "); 
+	            try {
+	            matricula= teclado.nextLine().toUpperCase();
+	          
+	            Statement stmt4 = con.createStatement();
+	            ResultSet rs3  = stmt4.executeQuery("SELECT * from vehiculos where matricula = '"+matricula+"'");
+	            if(rs3.next()) {
+	            	
+	            while(!valido2) {
+	            System.out.println("");
+	         	System.out.print(" ID ESTACIONAMIENTO: "); 
+	         	
+	         	idEstacionamiento = teclado.nextLine().toUpperCase();
+	         	
+	         	Statement stmt2 = null;
+	         	Statement stmt3 = con.createStatement();
+	         	
+	         	
+				ResultSet rs2  = stmt3.executeQuery("SELECT * from estacionamientos where idEstacionamiento = '"+idEstacionamiento+"'");
+				
+	            
+				
+				if(rs2.next()){
+				
+
+	    		
+
+	    			stmt2 = con.createStatement();
+	    			stmt2 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+	    			ResultSet rs = stmt2.executeQuery("SELECT * FROM usuarios");
+
+	    			// Nos posicionamos con el cursor en la próxima fila vacía de la tabla
+	    			rs.moveToInsertRow();
+	    			// Actualizamos los campos con los datos pasados por parámetro en la llamada al método
+	    			rs.updateString("dni", dni);
+	    			rs.updateString("nombre", nombre);
+	    			rs.updateString("apellidos", apellido);
+	    			rs.updateString("direccion", direccion);
+	    			rs.updateString("cuentaCorriente", cuenta);
+	    			rs.updateString("matricula", matricula);
+	    			rs.updateInt("admin", 0);
+	    			rs.updateString("idEstacionamiento", idEstacionamiento);
+	    			rs.updateString("contrasena", psw);
+	    			// Insertamos la nueva fila (nuevo jugador) con los datos proporcionados
+	    			rs.insertRow();
+	    			// Nos posicionamos con el cursor antes de la primera fila
+	    			rs.beforeFirst();
+
+	    			System.out.println("");
+	    			System.out.println("Se ha insertado correctamente el nuevo usuario " + nombre + "!");
+	    			System.out.println("");
+	    			valido2 = true;
+	    			valido = true;
+	    		
+				}else {
+					System.out.println("No se ha encontrado este ID de estacionamiento en la BD!");
+					System.out.println("");
+					valido = true;
+					valido2 = false;
+					
+				}
+	            }
+	            }else {
+	            	System.out.println("No se ha encontrado esta matricula en la BD.");
+	            	continue;
+	            }
+	    		} catch (SQLException e) {
+	    			valido = false;
+	    			valido2= false;
+	    			printSQLException(e);
+	    			
+	    			
+	    		}
+				
+	          }
+	             }
+	            }
+			
+			else if(opcion.charAt(0)=='3') {
+
+				System.out.println("== SALIENDO DEL PROGRAMA ==");
+	            System.out.println(" ");
+	            System.out.println("Gracias por tu colaboración, que tengas un buen dia");
+	            
+			}
+			
+			else {
+				System.out.println("Solo números entre 1 y 3");
+	            System.out.println(" "); 
+	            crearUsuario(con);
+			}
+		}
+
+         } 
+        	
+	public void eliminarAlquiler(Connection con) throws SQLException {
 
 		Statement stmt = null;
-	
-		try {
-			String idAlq;
-			int opcion;
+		
+		
+			int idAlq = 0;
+			String opcion = "";
+			boolean valido = true;
 			
-			
-			
-
 			Scanner teclado = new Scanner(System.in);
-			System.out.print(" Introduce el ID del Alquiler que deseas borrar: ");
-			idAlq= teclado.nextLine();
-
+			System.out.println("");
+			System.out.print("Introduce el ID del Alquiler que deseas borrar: ");
+			try {
+			idAlq = teclado.nextInt();
+			teclado.nextLine();
+			
+			String query = "select * from alquiler where idAlquiler = "+idAlq;
+			
+			 stmt= con.createStatement();
+			 ResultSet rs = stmt.executeQuery(query);
+			 if(rs.next()) {
+			  while(valido) {
 			System.out.println("Estas seguro que lo quieres eliminar?");
 			System.out.println(" ");
 			System.out.println(" ");
@@ -268,36 +316,48 @@ public Administrador() {
 			System.out.println("1. Si");
 			System.out.println("2. No");
 			System.out.print("Opción:");
-			opcion= teclado.nextInt();
+			opcion = teclado.nextLine();
 			
-			switch (opcion) {
-			case 1:
+			if(opcion=="") {
+				System.out.println("Escoge una opción válida.");
+				System.out.println(" ");
+				
+				
+			}else {
+			
+			if (opcion.charAt(0)=='1') {
+			
 				stmt= con.createStatement();
 				stmt.executeUpdate("Delete from  alquiler  "+" where idAlquiler = "+idAlq);
-				break;
-			case 2:
 				
-				break;
-			default:
-				System.out.println("Elige una opción correcta");
-				break;
+				valido = false;
 			}
-			
-			
-			
-			
-		} catch (SQLException e) { 
+				else if(opcion.charAt(0)=='2') {
 
-		}
-		finally {
-			try {
-				stmt.close();
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
+					valido = false;
+				}else {
+					System.out.println("Elige una opción correcta");
+					System.out.println(" ");
+			
+				}
 			}
+			
+			
+			  }
+			
+			}else {
+				System.out.println("El ID del alquiler no se encuentra en la base de datos.");
 			}
+			
+			}catch(SQLException e) {
+				 printSQLException(e);
+			 }catch(InputMismatchException e){
+				 System.out.println("Introduce un ID válido!");
+				 System.out.println(" ");
+			 }
+			
 }	
+	
 	public void listarAlquiler(Connection con) throws SQLException {
 		Scanner teclado = new Scanner(System.in);
 		Statement stmt = null;
@@ -324,14 +384,14 @@ public Administrador() {
 				System.out.println("*************************************");
 
 				String idAlquiler = rs.getString("idAlquiler");
-				System.out.println("Id: " + idAlquiler);
+				System.out.println(" ID: " + idAlquiler);
 				
 
 				String idEstacionamiento = rs.getString("idEstacionamiento");
-				System.out.println("Id Estacionamiento: " + idEstacionamiento);
+				System.out.println(" ID Estacionamiento: " + idEstacionamiento);
 
 				String precioMensual = rs.getString("precioMensual");
-				System.out.println("Precio Mensual: " + precioMensual);
+				System.out.println(" Precio Mensual: " + precioMensual);
 				
 				String dni = rs.getString("dni");
 				System.out.println(" DNI: " + dni);
@@ -342,7 +402,7 @@ public Administrador() {
 				System.out.println("*************************************");
 				listado +=  
 					
-						 "Id: " + idAlquiler +"\n"
+						 " Id: " + idAlquiler +"\n"
 						+ " Precio Mensual: " + precioMensual+"\n"
 						+ " DNI: " + dni + "\n"
 						+ " Matricula: " + matricula + "\n";
@@ -353,24 +413,44 @@ public Administrador() {
 				System.out.println("No hay alquileres");
 				}
 			else {
-				
+				boolean valido = true;
 				String temp = "**** LISTA DE ALQUILERES ****\n";
 				temp += listado;
+				temp +="\n";
+				while(valido) {
 				System.out.println("");
 				System.out.println("¿Quieres exportar el listado?");
 				System.out.println("         1) Si               ");
 				System.out.println("         2) No               ");
-				int opcion = teclado.nextInt();
-				if(opcion == 1){
+				
+				System.out.print("Opción: ");
+				String opcion = teclado.nextLine();
+				
+				if(opcion=="") {
+					System.out.println("Escoge una opción válida.");
+					System.out.println(" ");
+					
+					
+				}else {
+				
+				if (opcion.charAt(0)=='1') {
+				
 					ficherotxt(temp);
+					valido = false;
+				}
+					else if(opcion.charAt(0)=='2') {
+
+						valido = false;
+					}else {
+						System.out.println("Solo números entre 1 y 2");
+						System.out.println(" ");
+				
+					}
 				}
 			}
-			
-			
-			
-
-		} catch (SQLException e) {
-			e.printStackTrace();
+		}
+			} catch (SQLException e) {
+			printSQLException(e);
 		} finally {
 			stmt.close();
 		}
@@ -381,12 +461,13 @@ public Administrador() {
 	public void ficherotxt(String listado) {
 		FileOutputStream f = null;
 		try {
-			 f = new FileOutputStream("listado.txt", true);
+			 f = new FileOutputStream("listado.txt");
 			for (int i = 0; i < listado.length(); i++) {
 				char c = listado.charAt(i);
 				f.write((byte) c);
 			}
 			System.out.println("Listado exportado correctamente.");
+			System.out.println("");
 		} catch (IOException e) {
 			
 			
@@ -402,22 +483,17 @@ public Administrador() {
 		
 		
 	}
-	public void editarAlquiler(Connection con) throws SQLException {
+	
+	public void editarAlquiler(Connection con, int id) throws SQLException {
 
  		Scanner teclado = new Scanner(System.in);
- 		System.out.print("Introduce el Id del Alquiler para editar: ");
- 		System.out.println("");
- 		int id = 0;
- 		id = teclado.nextInt();
-
- 		teclado.nextLine(); // evitar errores
+ 		
 
  		Statement stmt = null;
+		stmt = con.createStatement();
+		ResultSet rs  = stmt.executeQuery("SELECT * from alquiler where idAlquiler = "+id);
 
- 		
- 			int opcion;			
-
- 			
+ 		if(rs.next()){
  			System.out.println("");
  			System.out.println("1) Estacionamiento");
  			System.out.println("2) Precio Mensual");
@@ -426,67 +502,148 @@ public Administrador() {
  			System.out.println("5) Salir");
  			System.out.println("");
  			System.out.print("¿Qué deseas editar?: ");
- 			opcion = teclado.nextInt();
- 			teclado.nextLine();
+ 			
+ 			String opcion = teclado.nextLine();		
  			System.out.println("");
- 			switch (opcion) {
- 			case 1:
- 				System.out.print(" Escribe el nuevo estacionamiento: ");
- 				
- 				String estacionamiento = "";
- 				estacionamiento = teclado.nextLine();
- 				System.out.println("");
-
- 				stmt= con.createStatement();
- 				stmt.executeUpdate("UPDATE `alquiler` SET `idEstacionamiento` = '" + estacionamiento +"' WHERE `alquiler`.`idAlquiler` = " + id); 
- 				System.out.println("Valor editado correctamente.");
- 				System.out.println(" ");
- 				break;
- 			case 2:
- 				System.out.print(" Escribe el nuevo precio mensual: ");
- 				
- 				double precioMensual= teclado.nextDouble();
- 				System.out.println("");
-
- 				stmt= con.createStatement();
- 				stmt.executeUpdate("UPDATE `alquiler` SET `precioMensual` = '" + precioMensual +"' WHERE `alquiler`.`idAlquiler` = " + id);
- 				System.out.println("Valor editado correctamente.");
- 				System.out.println(" ");
- 				break;
- 			case 3:
- 				System.out.print(" Escribe el nuevo DNI: ");
- 				
- 				String dni= teclado.nextLine();
- 				System.out.println("");
-
- 				stmt= con.createStatement();
- 				stmt.executeUpdate("UPDATE `alquiler` SET `dni` = '" + dni +"' WHERE `alquiler`.`idAlquiler` = " + id);
- 				System.out.println("Valor editado correctamente.");
- 				System.out.println(" ");
- 				break;
- 			case 4:
- 				System.out.print(" Escribe la nueva matricula: ");
- 				
- 				String matricula= teclado.nextLine();
- 				System.out.println("");
-
-
- 				stmt= con.createStatement();
- 				stmt.executeUpdate("UPDATE `alquiler` SET `matricula` = '" + matricula +"' WHERE `alquiler`.`idAlquiler` = " + id);
- 				System.out.println("Valor editado correctamente.");
- 				System.out.println(" ");
- 				break;
- 			case 5:
- 				System.out.print("Saliendo...");
- 				System.out.println("");
- 				
-
- 				break;
- 			default:
- 				System.out.println("Solo números entre 1 y 5");
- 		    	System.out.println(" ");  	
- 				break;
- 			}	
+ 			compruebaOpcionEditar(con, teclado, id, opcion);
+ 		}
+ 					
+ 		else {
+ 			System.out.println("No se reconoce el ID");
+ 			System.out.println("");
+ 			editarAlquiler(con, id);
+ 		}
+ 		
       }
+
+	public void compruebaOpcionEditar(Connection con, Scanner teclado, int id, String opcion) throws SQLException {
+		Statement stmt;
+		ResultSet rs;
+		if(opcion=="") {
+			System.out.println("Solo números entre 1 y 5");
+			System.out.println(" ");
+			
+		}else {
+		
+	
+		if (opcion.charAt(0)=='1') {
+		
+			System.out.print("Escribe el nuevo estacionamiento: ");
+			String estacionamiento = teclado.nextLine();
+			System.out.println("");
+			stmt = con.createStatement();
+			rs  = stmt.executeQuery("SELECT * from estacionamientos where idEstacionamiento = '"+estacionamiento+"'");
+			if(rs.next()){
+			
+			stmt= con.createStatement();
+			stmt.executeUpdate("UPDATE `alquiler` SET `idEstacionamiento` = '" + estacionamiento +"' WHERE `alquiler`.`idAlquiler` = " + id);
+			
+			System.out.println("Valor editado correctamente.");
+			System.out.println(" ");
+			
+			}else {
+				System.out.println("Estacionamiento incorrecto!");
+				System.out.println("");
+				editarAlquiler(con, id);
+			}
+		}
+			else if(opcion.charAt(0)=='2') {
+
+				System.out.print(" Escribe el nuevo precio mensual: ");
+				try {
+				double precioMensual= teclado.nextDouble();
+				System.out.println("");
+
+				stmt= con.createStatement();
+				stmt.executeUpdate("UPDATE `alquiler` SET `precioMensual` = '" + precioMensual +"' WHERE `alquiler`.`idAlquiler` = " + id);
+				System.out.println("Valor editado correctamente.");
+				System.out.println(" ");
+				editarAlquiler(con, id);
+				}catch(InputMismatchException e) {
+					System.out.println("Introduce un precio válido!");
+					editarAlquiler(con, id);
+				}
+				
+				
+			}
+			
+			else if(opcion.charAt(0)=='3') {
+
+				System.out.print(" Escribe el nuevo DNI: ");
+				
+				
+				String dni= teclado.nextLine();
+				System.out.println("");
+				stmt = con.createStatement();
+				rs  = stmt.executeQuery("SELECT * from usuarios where dni = '"+dni+"'");
+				if(rs.next()){	
+
+				stmt= con.createStatement();
+				stmt.executeUpdate("UPDATE `alquiler` SET `dni` = '" + dni +"' WHERE `alquiler`.`idAlquiler` = " + id);
+				System.out.println("Valor editado correctamente.");
+				System.out.println(" ");
+				editarAlquiler(con, id);
+				
+			}else {
+				System.out.println("DNI incorrecto!");
+				System.out.println("");
+				editarAlquiler(con, id);
+			}
+			}
+			else if(opcion.charAt(0)=='4') {
+
+				System.out.print(" Escribe la nueva matricula: ");
+				
+				String matricula= teclado.nextLine();
+				System.out.println("");
+
+				stmt = con.createStatement();
+				rs  = stmt.executeQuery("SELECT * from vehiculos where matricula = '"+matricula+"'");
+				if(rs.next()){
+
+				stmt= con.createStatement();
+				stmt.executeUpdate("UPDATE `alquiler` SET `matricula` = '" + matricula +"' WHERE `alquiler`.`idAlquiler` = " + id);
+				System.out.println("Valor editado correctamente.");
+				System.out.println(" ");
+				editarAlquiler(con, id);
+				}else {
+					System.out.println("Matrícula incorrecta!");
+					System.out.println("");
+					editarAlquiler(con, id);
+				}
+			}
+			else if(opcion.charAt(0)=='5') {
+
+				System.out.print("Saliendo...");
+				System.out.println("");
+				
+			}
+			else {
+				System.out.println("Solo números entre 1 y 5");
+				System.out.println("Vuelve a intentarlo!!!");
+				System.out.println(" ");
+				System.out.println(" ");
+				editarAlquiler(con, id);
+			}
+		}
+	}
+
+	public static void printSQLException(SQLException ex) {
+
+	ex.printStackTrace(System.err);
+
+	System.err.println("SQLState: " + ex.getSQLState()); // getSQLState()
+	System.err.println("Error Code: " + ex.getErrorCode()); // getErrorCode()
+	System.err.println("Message: " + ex.getMessage()); // getMessage()
+
+	Throwable t = ex.getCause(); // getCause() - Leemos la primera causa
+
+	while (t != null) {
+		System.out.println("Cause: " + t); // Imprimimos una causa
+		t = t.getCause(); // Leemos otra causa
+	}
+
 }
+}
+
 

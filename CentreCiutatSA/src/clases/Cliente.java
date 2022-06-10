@@ -50,10 +50,12 @@ public class Cliente extends Persona {
 
 		String query = "SELECT dni, nombre, apellidos, direccion, cuentaCorriente from usuarios where dni = " + "'"
 				+ dni + "'";
+		
 
 		try {
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
+			String nombre = "";
 
 			while (rs.next()) {
 				System.out.println(" ");
@@ -72,9 +74,16 @@ public class Cliente extends Persona {
 				System.out.println("======================================");
 				System.out.println("");
 				System.out.println(" ");
+				nombre= rs.getString("nombre");
+				
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
+			if(nombre.equals("")) {
+				System.out.println("\n\n");
+				System.out.println("Este DNI no está en la base de datos.");
+				System.out.println(" ");
+				}
+		} catch (SQLException e) {
+			printSQLException(e);
 		} finally {
 			stmt.close();
 		}
@@ -95,19 +104,24 @@ public class Cliente extends Persona {
 				+ matricula + "'";
 
 		String query2 = "SELECT idEstacionamiento from usuarios where matricula = " + "'" + matricula + "'";
-
+		String idEstacionamiento ="";
 		try {
 			stmt = con.createStatement();
 			stmt2 = con.createStatement();
 			
+			
 			ResultSet rs = stmt.executeQuery(query);
 			ResultSet rs2 = stmt2.executeQuery(query2);
+			
+			
 			while (rs2.next()) {
 				System.out.println(" ");
 				System.out.println("======================================");
 				System.out.println("======================================");
 				System.out.println(" == VEHICULO DEL CLIENTE == ");
 				System.out.println("\n Número de estacionamiento: " + rs2.getString("idEstacionamiento"));
+				idEstacionamiento = rs2.getString("idEstacionamiento");
+			
 
 				while (rs.next()) {
 
@@ -116,16 +130,43 @@ public class Cliente extends Persona {
 					System.out.println("\n Tipo de vehículo: " + rs.getString("TipoVehiculo"));
 					System.out.println("======================================");
 					System.out.println("======================================");
+					
 				}
+				
 			}
+			
+			if(idEstacionamiento.equals("")) {
+				System.out.println("\n\n");
+				System.out.println("Esta matricula no está en la base de datos.");
+				System.out.println(" ");
+				}
+			
+				
 
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (SQLException e) {
+			printSQLException(e);
 		} finally {
 			stmt.close();
 		}
 
 	}
+
+public static void printSQLException(SQLException ex) {
+
+	ex.printStackTrace(System.err);
+
+	System.err.println("SQLState: " + ex.getSQLState()); // getSQLState()
+	System.err.println("Error Code: " + ex.getErrorCode()); // getErrorCode()
+	System.err.println("Message: " + ex.getMessage()); // getMessage()
+
+	Throwable t = ex.getCause(); // getCause() - Leemos la primera causa
+
+	while (t != null) {
+		System.out.println("Cause: " + t); // Imprimimos una causa
+		t = t.getCause(); // Leemos otra causa
+	}
+
+}
 
 }
 
