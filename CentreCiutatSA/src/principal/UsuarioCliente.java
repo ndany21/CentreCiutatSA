@@ -22,7 +22,7 @@ public class UsuarioCliente {
 			login(con, sc);
 
 		} catch (SQLException e) {
-			System.out.println("Error connexión BBDD");
+			System.err.println("Error connexión BBDD");
 			e.printStackTrace();
 			printSQLException(e);
 		}	
@@ -77,7 +77,7 @@ public class UsuarioCliente {
 			String contrasena = "";
 
 			if (rs.next() == false) {
-				System.out.println("No se encuentra en la base de datos  ");
+				System.err.println("No se encuentra en la base de datos  ");
 				login(con, sc);
 
 			} else {
@@ -95,14 +95,14 @@ public class UsuarioCliente {
 
 					menuAdmin(con, a1, sc);
 				} else {
-					System.out.println("No se encuentra en la base de datos");
+					System.err.println("No se encuentra en la base de datos");
 					login(con, sc);
 				}
 
 			}
 
 		} catch (SQLException e) {
-			System.out.println("ERROR! No se encuentra en la base de datos");
+			System.err.println("ERROR! No se encuentra en la base de datos");
 			e.getMessage();
 			printSQLException(e);
 			
@@ -135,7 +135,7 @@ public class UsuarioCliente {
 		opcion = sc.nextLine();
 		
 		if(opcion=="") {
-			System.out.println("Solo números entre 1 y 5");
+			System.err.println("Solo números entre 1 y 5");
 			System.out.println(" ");
 			
 			menuAdmin(con, a1, sc);
@@ -162,7 +162,7 @@ public class UsuarioCliente {
 				// CONTECTAR CON BASE DE DATOS PARA EDITAR ALQUILERES
 				
 				}catch(InputMismatchException e){
-		 			System.out.println("Debes introducir un ID válido!");
+		 			System.err.println("Debes introducir un ID válido!");
 		 			System.out.println(" ");
 		 			
 		 		}
@@ -189,7 +189,7 @@ public class UsuarioCliente {
 
 			}
 			else {
-				System.out.println("Solo números entre 1 y 5");
+				System.err.println("Solo números entre 1 y 5");
 				System.out.println(" ");
 				menuAdmin(con, a1, sc);
 			}
@@ -224,7 +224,7 @@ public class UsuarioCliente {
 		
 		opcion = sc.nextLine();
 		if(opcion=="") {
-			System.out.println("Solo números entre 1 y 3");
+			System.err.println("Solo números entre 1 y 3");
 			System.out.println(" ");
 			menuCliente(con, c1, sc, nombreIntroducido, nombreUsuario, apellidosUsuario);
 		}else {
@@ -255,7 +255,7 @@ public class UsuarioCliente {
 			}
 			
 			else {
-			System.out.println("Solo números entre 1 y 3");
+			System.err.println("Solo números entre 1 y 3");
 			System.out.println(" ");
 			menuCliente(con, c1, sc, nombreIntroducido, nombreUsuario, apellidosUsuario);
 			}

@@ -224,7 +224,7 @@ public class Administrador extends Persona {
 			}
 
 			else {
-				System.out.println("Solo números entre 1 y 3");
+				System.err.println("Solo números entre 1 y 3");
 				System.out.println(" ");
 				crearUsuario(con);
 			}
@@ -301,7 +301,7 @@ public class Administrador extends Persona {
 					opcion = teclado.nextLine();
 
 					if (opcion == "") {
-						System.out.println("Escoge una opción válida.");
+						System.err.println("Escoge una opción válida.");
 						System.out.println(" ");
 
 					} else {
@@ -318,7 +318,7 @@ public class Administrador extends Persona {
 
 							valido = false;
 						} else {
-							System.out.println("Elige una opción correcta");
+							System.err.println("Elige una opción correcta");
 							System.out.println(" ");
 
 						}
@@ -327,13 +327,13 @@ public class Administrador extends Persona {
 				}
 
 			} else {
-				System.out.println("El ID del alquiler no se encuentra en la base de datos.");
+				System.err.println("El ID del alquiler no se encuentra en la base de datos.");
 			}
 
 		} catch (SQLException e) {
 			printSQLException(e);
 		} catch (InputMismatchException e) {
-			System.out.println("Introduce un ID válido!");
+			System.err.println("Introduce un ID válido!");
 			System.out.println(" ");
 		}
 
@@ -384,7 +384,7 @@ public class Administrador extends Persona {
 			}
 			if (listado.equals("")) {
 				System.out.println("\n\n");
-				System.out.println("No hay alquileres");
+				System.err.println("No hay alquileres");
 			} else {
 				boolean valido = true;
 				String temp = "**** LISTA DE ALQUILERES ****\n";
@@ -476,7 +476,7 @@ public class Administrador extends Persona {
 		}
 
 		else {
-			System.out.println("No se reconoce el ID");
+			System.err.println("No se reconoce el ID");
 			System.out.println("");
 
 		}
@@ -487,7 +487,7 @@ public class Administrador extends Persona {
 		Statement stmt;
 		ResultSet rs;
 		if (opcion == "") {
-			System.out.println("Solo números entre 1 y 5");
+			System.err.println("Solo números entre 1 y 5");
 			System.out.println(" ");
 
 		} else {
@@ -510,7 +510,7 @@ public class Administrador extends Persona {
 					System.out.println(" ");
 
 				} else {
-					System.out.println("Estacionamiento incorrecto!");
+					System.err.println("Estacionamiento incorrecto!");
 					System.out.println("");
 					editarAlquiler(con, id);
 				}
@@ -528,7 +528,7 @@ public class Administrador extends Persona {
 					System.out.println(" ");
 					editarAlquiler(con, id);
 				} catch (InputMismatchException e) {
-					System.out.println("Introduce un precio válido!");
+					System.err.println("Introduce un precio válido!");
 					editarAlquiler(con, id);
 				}
 
@@ -552,7 +552,7 @@ public class Administrador extends Persona {
 					editarAlquiler(con, id);
 
 				} else {
-					System.out.println("DNI incorrecto!");
+					System.err.println("DNI incorrecto!");
 					System.out.println("");
 					editarAlquiler(con, id);
 				}
@@ -574,7 +574,7 @@ public class Administrador extends Persona {
 					System.out.println(" ");
 					editarAlquiler(con, id);
 				} else {
-					System.out.println("Matrícula incorrecta!");
+					System.err.println("Matrícula incorrecta!");
 					System.out.println("");
 					editarAlquiler(con, id);
 				}
@@ -584,8 +584,8 @@ public class Administrador extends Persona {
 				System.out.println("");
 
 			} else {
-				System.out.println("Solo números entre 1 y 5");
-				System.out.println("Vuelve a intentarlo!!!");
+				System.err.println("Solo números entre 1 y 5");
+				System.err.println("Vuelve a intentarlo!!!");
 				System.out.println(" ");
 				System.out.println(" ");
 				editarAlquiler(con, id);
@@ -622,7 +622,7 @@ public class Administrador extends Persona {
 
 			if (matricula.equals("")) {
 				System.out.println("");
-				System.out.println(" DEBES INTRODUCIR UNA MATRÍCULA!");
+				System.err.println(" DEBES INTRODUCIR UNA MATRÍCULA!");
 				System.out.println("");
 				valido = false;
 			} else {

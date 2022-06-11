@@ -112,7 +112,7 @@ public class Cliente extends Persona {
 			}
 			if(nombre.equals("")) {
 				System.out.println("\n\n");
-				System.out.println("Este DNI no está en la base de datos.");
+				System.err.println("Este DNI no está en la base de datos.");
 				System.out.println(" ");
 				}
 		} catch (SQLException e) {
@@ -175,7 +175,7 @@ public class Cliente extends Persona {
 			
 			if(idEstacionamiento.equals("")) {
 				System.out.println("\n\n");
-				System.out.println("Esta matricula no está en la base de datos.");
+				System.err.println("Esta matricula no está en la base de datos.");
 				System.out.println(" ");
 				}
 			
