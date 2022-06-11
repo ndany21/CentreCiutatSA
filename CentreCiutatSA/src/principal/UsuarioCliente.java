@@ -6,30 +6,32 @@ import java.util.Scanner;
 
 import clases.*;;
 
+/**
+ * Esta es la clase UsuarioCliente que tiene el metodo main
+ * @author Adrian tur, Adrian marzo, Miriam fernandez, Sergio Bibiloni, Daniel yela 
+ *
+ */
 public class UsuarioCliente {
 
 	public static void main(String[] args) {
 
 		try {
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/centreciutat", "root", "");
-			
-
-			
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/centreciutat", "root", "");	
 
 			Scanner sc = new Scanner(System.in);
-
-
 			login(con, sc);
 
 		} catch (SQLException e) {
 			System.out.println("Error connexión BBDD");
 			e.printStackTrace();
 			printSQLException(e);
-		}
-
-		
+		}	
 	}
 
+	/**
+	 * Esté es el método buscartuInformacion de la clase Cliente, este método nos muestra la información del usuario,
+	 * pide un DNI almacenado en la BBDD al usuario y lo muestra.
+	 */
 	public static void login(Connection con, Scanner sc) throws SQLException {
 		
 		Cliente c1 = new Cliente();
@@ -109,6 +111,10 @@ public class UsuarioCliente {
 		}
 	}
 
+	/**
+	 * Esté es el método buscartuInformacion de la clase Cliente, este método nos muestra la información del usuario,
+	 * pide un DNI almacenado en la BBDD al usuario y lo muestra.
+	 */
 	public static void menuAdmin(Connection con, Administrador a1, Scanner sc) throws SQLException {
 		String opcion;
 		
@@ -190,6 +196,10 @@ public class UsuarioCliente {
 		}
 	}
 
+	/**
+	 * Esté es el método buscartuInformacion de la clase Cliente, este método nos muestra la información del usuario,
+	 * pide un DNI almacenado en la BBDD al usuario y lo muestra.
+	 */
 	public static void menuCliente(Connection con, Cliente c1, Scanner sc, String nombreIntroducido,
 			String nombreUsuario, String apellidosUsuario) throws SQLException {
 		String opcion ;
@@ -253,8 +263,11 @@ public class UsuarioCliente {
 
 		}
 
-	
-	
+	/**
+	 * Esté es el método printSQLException de la clase UsuarioCliente, este método nos muestra sentencias de errores posibles,
+	  * @param ex Objeto cuya información esta siendo mostrada.
+	 *
+	 */
 	public static void printSQLException(SQLException ex) {
 
 		ex.printStackTrace(System.err);
