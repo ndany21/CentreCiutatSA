@@ -81,7 +81,7 @@ public class Administrador extends Persona {
 				System.out.println(" ");
 				System.out.println(" ");
 
-				System.out.print("  NOMBRE: ");
+				System.out.print(" NOMBRE: ");
 				nombre = teclado.nextLine();
 
 				System.out.println(" ");
@@ -126,9 +126,7 @@ public class Administrador extends Persona {
 						rs.updateString("apellidos", apellido);
 						rs.updateString("direccion", direccion);
 						rs.updateString("cuentaCorriente", cuenta);
-						rs.updateString("matricula", null);
 						rs.updateInt("admin", 1);
-						rs.updateString("idEstacionamiento", null);
 						rs.updateString("contrasena", psw);
 						// Insertamos la nueva fila (nuevo jugador) con los datos proporcionados
 						rs.insertRow();
@@ -711,6 +709,11 @@ public class Administrador extends Persona {
 			} else {
 				System.err.println(" El ID de Estacionamiento no existe!");
 				valido = false;
+				stmt2 = con.createStatement();
+				stmt2.executeUpdate("Delete from  usuarios where dni = '" + dni + "'");
+				System.err.println(" Se ha eliminado el usuario con dni: " + dni);
+				stmt2.executeUpdate("Delete from  vehiculos where matricula = '" + matricula + "'");
+				System.err.println(" Se ha eliminado el vehiculo con matricula: " + matricula);
 			}
 
 			if (valido) {
