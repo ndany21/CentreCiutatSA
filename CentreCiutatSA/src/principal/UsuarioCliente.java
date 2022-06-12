@@ -55,7 +55,7 @@ public class UsuarioCliente {
 
 		System.out.println(" ");
 		System.out.println(" ");
-		System.out.println(" ");
+		System.out.println("Versión 1.0 Aplicación Centre Ciutat ");
 		System.out.println(" ");
 
 		Statement stmt = null;
