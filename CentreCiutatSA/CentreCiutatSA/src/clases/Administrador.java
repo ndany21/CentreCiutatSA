@@ -72,7 +72,7 @@ public class Administrador extends Persona {
 	 * Se asegurará de que en la bbdd no hayan valores repetidos y creará el nuevo usuario con su vehiculo añadido a un nuevo estacionamiento.
 	 *
 	 */
-	public void crearUsuario(Connection con) {
+	public boolean crearUsuario(Connection con) {
 		Scanner teclado = new Scanner(System.in);
 
 		String opcion = "";
@@ -85,6 +85,7 @@ public class Administrador extends Persona {
 		String matricula = "";
 		String idEstacionamiento = "";
 		boolean valido = false;
+		boolean correcto = false;
 
 		System.out.println("========== CREAR USUARIO ==========");
 		System.out.println(" ");
@@ -125,14 +126,17 @@ public class Administrador extends Persona {
 				System.out.print(" CONTRASEÑA: ");
 				psw = teclado.nextLine();
 
+				while(!valido) {
 				System.out.println(" ");
 				System.out.print(" DNI: ");
 				dni = teclado.nextLine();
 				if (dni == "") {
 					System.out.println(" DNI Obligatorio");
 					System.out.println(" ");
+					valido = false;
 				} else {
 
+					valido = true;
 					System.out.println(" ");
 					System.out.print(" DIRECCÓN: ");
 					direccion = teclado.nextLine();
@@ -168,6 +172,7 @@ public class Administrador extends Persona {
 
 						System.out.println("");
 						System.out.println("Se ha insertado correctamente el nuevo usuario " + nombre + "!");
+						correcto = true;
 
 					} catch (SQLException e) {
 						printSQLException(e);
@@ -180,6 +185,8 @@ public class Administrador extends Persona {
 						}
 					}
 				}
+				}
+			
 			} else if (opcion.charAt(0) == '2') {
 
 				System.out.println("");
@@ -231,13 +238,13 @@ public class Administrador extends Persona {
 						cuenta = teclado.nextLine();
 
 						matricula = crearVehiculo(con, teclado);
-						insertarUsuario(con, nombre, apellido, dni, psw, direccion, cuenta);
+						correcto = insertarUsuario(con, nombre, apellido, dni, psw, direccion, cuenta);
 						System.out.println(" ");
 						System.out.print(" ID DE ESTACIONAMIENTO: ");
 						idEstacionamiento = teclado.nextLine();
 
 						crearAlquiler(con, idEstacionamiento, dni, matricula);
-
+						
 					}
 
 				} catch (SQLException e) {
@@ -253,6 +260,7 @@ public class Administrador extends Persona {
 				System.out.println("== SALIENDO DEL PROGRAMA ==");
 				System.out.println(" ");
 				System.out.println("Gracias por tu colaboración, que tengas un buen dia");
+				correcto = true;
 
 			}
 
@@ -262,7 +270,7 @@ public class Administrador extends Persona {
 				crearUsuario(con);
 			}
 		}
-
+		return correcto;
 	}
 
 	/**
@@ -271,9 +279,10 @@ public class Administrador extends Persona {
 	 * Hace un listado que recoge todos los datos del nuevo usuario para despues almacenarlo en la bd.
 	 *
 	 */
-	public void insertarUsuario(Connection con, String nombre, String apellido, String dni, String psw,
+	public boolean insertarUsuario(Connection con, String nombre, String apellido, String dni, String psw,
 			String direccion, String cuenta) throws SQLException {
 		Statement stmt = null;
+		boolean correcto = false; 
 
 		try {
 			stmt = con.createStatement();
@@ -299,12 +308,14 @@ public class Administrador extends Persona {
 
 			System.out.println("");
 			System.out.println(" Se ha insertado correctamente el nuevo usuario " + nombre + "!");
+			correcto = true;
 			System.out.println("");
 		} catch (SQLException e) {
 
 			printSQLException(e);
 
 		}
+		return correcto;
 
 	}
 
@@ -314,10 +325,10 @@ public class Administrador extends Persona {
 	 * Hace un delete del alquiler que le pasemos y actualiza el estacionamiento a disponible.
 	 *
 	 */
-	public void eliminarAlquiler(Connection con) throws SQLException {
+	public boolean eliminarAlquiler(Connection con) throws SQLException {
 
 		Statement stmt = null;
-
+		boolean correcto = false;
 		int idAlq = 0;
 		String opcion = "";
 		boolean valido = true;
@@ -335,6 +346,8 @@ public class Administrador extends Persona {
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs.next()) {
 				String idEstacionamiento = rs.getString("idEstacionamiento");
+				String matricula = rs.getString("matricula");
+				String dni = rs.getString("dni");
 				while (valido) {
 					System.out.println("Estas seguro que lo quieres eliminar?");
 					System.out.println(" ");
@@ -357,8 +370,10 @@ public class Administrador extends Persona {
 							stmt.executeUpdate("Delete from  alquiler  " + " where idAlquiler = " + idAlq);
 							stmt.executeUpdate("UPDATE estacionamientos set disponible = 1 where idEstacionamiento = '"
 									+ idEstacionamiento + "'");
-
+							stmt.executeUpdate("Delete from  vehiculos where matricula = '" + matricula+"'");
+							stmt.executeUpdate("Delete from  usuarios where matricula = '" + dni+"'");
 							valido = false;
+							correcto = true;
 						} else if (opcion.charAt(0) == '2') {
 
 							valido = false;
@@ -381,6 +396,7 @@ public class Administrador extends Persona {
 			System.err.println("Introduce un ID válido!");
 			System.out.println(" ");
 		}
+		return correcto;
 
 	}
 	/**
@@ -389,7 +405,9 @@ public class Administrador extends Persona {
 	 * Hace un listado con todos los alquileres realizados y que se encuentran almacenados.
 	 *
 	 */
-	public void listarAlquiler(Connection con) throws SQLException {
+	public String listarAlquiler(Connection con) throws SQLException {
+		
+		String listado = "";
 		Scanner teclado = new Scanner(System.in);
 		Statement stmt = null;
 		String query = "select idAlquiler, idEstacionamiento, precioMensual, dni, matricula from alquiler";
@@ -398,7 +416,7 @@ public class Administrador extends Persona {
 
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
-			String listado = "";
+			//String listado = "";
 
 			System.out.println("");
 			System.out.println("**** LISTA DE ALQUILERES ****");
@@ -430,7 +448,9 @@ public class Administrador extends Persona {
 
 						" Id: " + idAlquiler + "\n" + " Precio Mensual: " + precioMensual + "\n" + " DNI: " + dni + "\n"
 								+ " Matricula: " + matricula + "\n";
-
+				
+				
+				listado= rs.getString("dni");
 			}
 			if (listado.equals("")) {
 				System.out.println("\n\n");
@@ -475,7 +495,7 @@ public class Administrador extends Persona {
 		} finally {
 			stmt.close();
 		}
-
+		return listado;
 	}
 
 	/**
@@ -511,11 +531,12 @@ public class Administrador extends Persona {
 	 * pide al usuario un id de alquiler el cual esta en la bd si dicho id no se encuentra nos dara un error.
 	 *
 	 */
-	public void editarAlquiler(Connection con, int id) throws SQLException {
+	public boolean editarAlquiler(Connection con, int id) throws SQLException {
 
 		Scanner teclado = new Scanner(System.in);
 
 		Statement stmt = null;
+		boolean correcto = false;
 		stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * from alquiler where idAlquiler = " + id);
 
@@ -531,7 +552,7 @@ public class Administrador extends Persona {
 
 			String opcion = teclado.nextLine();
 			System.out.println("");
-			compruebaOpcionEditar(con, teclado, id, opcion);
+			correcto = compruebaOpcionEditar(con, teclado, id, opcion);
 		}
 
 		else {
@@ -539,7 +560,7 @@ public class Administrador extends Persona {
 			System.out.println("");
 
 		}
-
+		return correcto;
 	}
 
 	/**
@@ -548,9 +569,10 @@ public class Administrador extends Persona {
 	 * pide al usuario insertar un nuevo estacionamiento, precio mensual, matricula o DNI.
 	 *
 	 */
-	public void compruebaOpcionEditar(Connection con, Scanner teclado, int id, String opcion) throws SQLException {
+	public boolean compruebaOpcionEditar(Connection con, Scanner teclado, int id, String opcion) throws SQLException {
 		Statement stmt;
 		ResultSet rs;
+		boolean correcto =false;
 		if (opcion == "") {
 			System.err.println("Solo números entre 1 y 5");
 			System.out.println(" ");
@@ -573,6 +595,7 @@ public class Administrador extends Persona {
 
 					System.out.println("Valor editado correctamente.");
 					System.out.println(" ");
+					correcto =true;
 
 				} else {
 					System.err.println("Estacionamiento incorrecto!");
@@ -591,6 +614,7 @@ public class Administrador extends Persona {
 							+ "' WHERE `alquiler`.`idAlquiler` = " + id);
 					System.out.println("Valor editado correctamente.");
 					System.out.println(" ");
+					correcto =true;
 					editarAlquiler(con, id);
 				} catch (InputMismatchException e) {
 					System.err.println("Introduce un precio válido!");
@@ -614,6 +638,7 @@ public class Administrador extends Persona {
 							"UPDATE `alquiler` SET `dni` = '" + dni + "' WHERE `alquiler`.`idAlquiler` = " + id);
 					System.out.println("Valor editado correctamente.");
 					System.out.println(" ");
+					correcto =true;
 					editarAlquiler(con, id);
 
 				} else {
@@ -637,6 +662,7 @@ public class Administrador extends Persona {
 							+ "' WHERE `alquiler`.`idAlquiler` = " + id);
 					System.out.println("Valor editado correctamente.");
 					System.out.println(" ");
+					correcto =true;
 					editarAlquiler(con, id);
 				} else {
 					System.err.println("Matrícula incorrecta!");
@@ -647,6 +673,7 @@ public class Administrador extends Persona {
 
 				System.out.print("Saliendo...");
 				System.out.println("");
+				correcto =true;
 
 			} else {
 				System.err.println("Solo números entre 1 y 5");
@@ -656,6 +683,7 @@ public class Administrador extends Persona {
 				editarAlquiler(con, id);
 			}
 		}
+	return correcto;
 	}
 
 	/**
@@ -765,13 +793,14 @@ public class Administrador extends Persona {
 	 * devuelve del usuario una matricula, dni y actualiza el estacionamiento disponible.
 	 * los inserta junto con precio mensual en un nuevo alquiler 
 	 */
-	public void crearAlquiler(Connection con, String idEstacionamiento, String dni, String matricula) {
+	public boolean crearAlquiler(Connection con, String idEstacionamiento, String dni, String matricula) {
 
 		Statement stmt = null;
 		Statement stmt2 = null;
 		Statement stmt3 = null;
 		double precioMensual = 0;
 		boolean valido = true;
+		boolean correcto = false;
 		int disponible = 8;
 		String query = "select precioMensual, disponible from estacionamientos where idEstacionamiento = '"
 				+ idEstacionamiento + "'";
@@ -824,6 +853,7 @@ public class Administrador extends Persona {
 							//actualiza el valor disponible a 0 en la bbdd
 							"UPDATE `estacionamientos` SET `disponible` = 0  WHERE `estacionamientos`.`idEstacionamiento` = '"
 									+ idEstacionamiento + "'");
+					correcto = true;
 				} else {
 					System.out.println("El ID de Estacionamiento no está disponible!");
 					stmt2 = con.createStatement();
@@ -839,6 +869,6 @@ public class Administrador extends Persona {
 			printSQLException(e);
 
 		}
-
+		return correcto;
 	}
 }

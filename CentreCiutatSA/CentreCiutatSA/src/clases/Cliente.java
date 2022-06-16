@@ -71,11 +71,11 @@ public class Cliente extends Persona {
 	 * pide un DNI almacenado en la BBDD al usuario y lo muestra.
 	 */
 	// Métodos
-	public void buscartuInformacion(Connection con) throws SQLException {
+	public String buscartuInformacion(Connection con) throws SQLException {
 
 		String dni;
 		Statement stmt = null;
-
+		String nombre = "";
 		Scanner teclado = new Scanner(System.in);
 		
 		System.out.println(" Introduce tu DNI: ");
@@ -88,7 +88,7 @@ public class Cliente extends Persona {
 		try {
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
-			String nombre = "";
+			
 
 			while (rs.next()) {
 				System.out.println(" ");
@@ -118,9 +118,11 @@ public class Cliente extends Persona {
 		} catch (SQLException e) {
 			printSQLException(e);
 		} finally {
+			if(stmt != null) {
 			stmt.close();
+			}
 		}
-
+		return nombre;
 	}
 
 	/**
@@ -128,12 +130,12 @@ public class Cliente extends Persona {
 	 * pide una matricula almacenada en la BBDD al usuario y lo muestra.
 	 *
 	 */
-	public void buscartuVehiculo(Connection con) throws SQLException {
+	public String buscartuVehiculo(Connection con) throws SQLException {
 
 		String matricula;
 		Statement stmt = null;
 		Statement stmt2 = null;
-
+		String marca = "";
 		Scanner teclado = new Scanner(System.in);
 		System.out.println(" Introduce la matricula: ");
 		matricula = teclado.nextLine();
@@ -168,13 +170,14 @@ public class Cliente extends Persona {
 					System.out.println("\n Tipo de vehículo: " + rs.getString("TipoVehiculo"));
 					System.out.println("======================================");
 					System.out.println("======================================");
-					
+					marca = rs.getString("marca");
 				}
 				
 			}
 			
 			if(idEstacionamiento.equals("")) {
 				System.out.println("\n\n");
+				System.out.println("");
 				System.err.println("Esta matricula no está en la base de datos.");
 				System.out.println(" ");
 				}
@@ -184,8 +187,11 @@ public class Cliente extends Persona {
 		} catch (SQLException e) {
 			printSQLException(e);
 		} finally {
+			if (stmt != null) {
 			stmt.close();
+			}
 		}
+		return marca;
 
 	}
 
